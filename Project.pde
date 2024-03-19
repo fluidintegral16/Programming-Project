@@ -4,32 +4,37 @@ TextInput fromAirportInput;
 TextInput toAirportInput;
 Button searchButton;
 
+PImage bg;
+float opacity = 90;
+
 void setup() {
-  size(400, 400);
-  background(255);
+  size(1200, 700);
+  bg = loadImage("map.jpg");
   
-  fromTextInput = new TextInput(150, 50);
-  toTextInput = new TextInput(150, 100);
-  fromAirportInput = new TextInput(150, 150);
-  toAirportInput = new TextInput(150, 200);
-  
+  fromTextInput = new TextInput(600, 140);
   fromTextInput.setLabel("From Date:");
+  fromTextInput.setLabelPosition(500, 150);
+
+  toTextInput = new TextInput(600, 100);
   toTextInput.setLabel("To Date:");
+  toTextInput.setLabelPosition(500, 200);
+
+  fromAirportInput = new TextInput(600, 150);
   fromAirportInput.setLabel("From Airport:");
+  fromAirportInput.setLabelPosition(500, 250);
+
+  toAirportInput = new TextInput(600, 200);
   toAirportInput.setLabel("To Airport:");
+  toAirportInput.setLabelPosition(500, 300);
   
   searchButton = new Button("Search", 200, 250, 80, 30);
 }
 
 void draw() {
   background(255);
-  
-  textSize(16);
-  fill(0);
-  text("From Date:", 50, 50);
-  text("To Date:", 50, 100);
-  text("From Airport:", 50, 150);
-  text("To Airport:", 50, 200);
+  tint(255, opacity);
+  image(bg, 0, 0, width, height);
+  noTint();
   
   fromTextInput.display();
   toTextInput.display();
