@@ -10,7 +10,6 @@ ArrayList<Integer> cancellationsIn;
 ArrayList<Integer> lateDepartures;
 ArrayList<Integer> lateArrivals;
 
-
 void setup()
 {
   size (1200, 700);
@@ -34,8 +33,8 @@ void setup()
   gatherDisplayableData();
   int time2 = millis();
   println("Part 2 took " + (time2-time1) + " milliseconds to run\n");
-  
-  
+
+
   DataPoints[13].gatherData(DataPoints);
 }
 
@@ -49,11 +48,12 @@ void draw()
   text(DataPoints[0].Distance, 100, 25 + 100);
 }
 
-void init_flights (Table table, DataPoint DataPoints[])
+// Arnav Sanghi, created a method, to take the data from table and create each flight as an object with its respective variables, 7pm, 8/3/2024
+void init_flights(Table table, DataPoint DataPoints[])
 {
   for (int i = 0; i < DataPoints.length; i++)
   {
-    DataPoints[i] = new DataPoint(table.getInt(i, 0), table.getString(i, 1), table.getInt(i, 2),
+    DataPoints[i] = new DataPoint(table.getString(i, 0), table.getString(i, 1), table.getInt(i, 2),
       table.getString(i, 3), table.getString(i, 4), table.getString(i, 5), table.getInt(i, 6),
       table.getString(i, 7), table.getString(i, 8), table.getString(i, 9), table.getInt(i, 10),
       table.getInt(i, 11), table.getInt(i, 12), table.getInt(i, 13), table.getInt(i, 14), table.getInt(i, 15),
@@ -78,14 +78,14 @@ void gatherDisplayableData()
         valid = false;
       }
     }
-    
+
     if(valid) 
     {
       airportWACs.add(DataPoints[i].originState());
       airports.add(DataPoints[i].origin());
     }
   }
-  
+
   // -Ben   Creates another list that corresponds to the first with the amount of appearances of the airport
   for(int i = 0; i < airportWACs.size(); i++)
   {
@@ -129,8 +129,8 @@ void gatherDisplayableData()
     lateDepartures.add(lateDeps);
     lateArrivals.add(lateArrs);
   }
-  
-  
+
+
   println("Airports: " + airports);
   println("Airport WACs: " + airportWACs);
   println("Flights out: " + flightsOut);
@@ -140,7 +140,7 @@ void gatherDisplayableData()
   println("Cancellations Out: " + cancellationsOut);
   println("Cancellations In: " + cancellationsIn);
   println("\nThere are " + airports.size() + " airports in this data set\n");
-  
+
   // -Ben   prints the airports with the amount of appearances, cancellations, late departures, and percentages in the data set
   println("Airport : Flights Out : Late Departures : Cancellations : % On Time/Early, % Late, % Cancelled --- Flights In : Late Arrivals : Cancellations ");
   for(int i = 0; i < airports.size(); i++)
@@ -151,7 +151,7 @@ void gatherDisplayableData()
     println(airports.get(i) + " : " + flightsOut.get(i) + " : " + lateDepartures.get(i) + " : " + cancellationsOut.get(i) + 
     " : " + percentOnTimeOut + "%, " + percentLateOut + "%, " + percentCancelledOut + "% --- " + flightsIn.get(i) + " : " + lateArrivals.get(i) + " : " + cancellationsIn.get(i));
   }
-  
+
   int nationalFlights = 0;
   int nationalLates = 0;
   int nationalCancels = 0;
