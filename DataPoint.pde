@@ -59,6 +59,11 @@ class DataPoint
     return OriginWac;
   }
   
+  String originState()
+  {
+    return OriginState;
+  }
+  
   String originCityName()
   {
     return OriginCityName;
@@ -69,8 +74,84 @@ class DataPoint
     return Origin;
   }
   
+  String dest()
+  {
+    return Dest;
+  }
+  
   int cancelled()
   {
     return Cancelled;
   }
+  
+  int crsDepTime()
+  {
+    return CRSDepTime;
+  }
+  
+  int depTime()
+  {
+    return DepTime;
+  }
+  
+  int crsArrTime()
+  {
+    return CRSArrTime;
+  }
+  
+  int arrTime()
+  {
+    return ArrTime;
+  }
+  
+  
+  void gatherData(DataPoint[] dataPoints)
+  {
+    int appearances = 0;
+    int cancels = 0;
+    int lates = 0;
+    String currentAirport = Origin;
+    for(int j = 0; j < dataPoints.length; j++)
+    {
+      String comparingAirport = dataPoints[j].origin();
+      if(currentAirport.equals(comparingAirport))
+      {
+        appearances++;
+        if(DataPoints[j].cancelled()==1)
+        {
+          cancels++;
+        }
+        if(DataPoints[j].crsDepTime() < DataPoints[j].depTime())
+        {
+          lates++;
+          
+        }
+      }
+      
+    }
+    println(Origin);
+    println("Flights out: " + appearances);
+    println("Late Departures: " + lates);
+    println("Cancellations: " + cancels);
+    
+    
+    double percentCancelled = float(cancels)/float(appearances)*100;
+    double percentLate = float(lates)/float(appearances)*100; 
+    double percentOnTime = 100-percentLate-percentCancelled;
+    println("On time: " + percentOnTime + "%\nLate: " + percentLate + "%\nCancelled: " + percentCancelled + "%");
+    
+    double cancelledAngle = percentCancelled*PI/50;
+    double lateAngle = percentLate*PI/50;
+    double onTimeAngle = percentOnTime*PI/50;
+    
+    double radians[];
+    radians = new double[3];
+    radians[0] = onTimeAngle;
+    radians[1] = lateAngle;
+    radians[2] = cancelledAngle;
+    
+    println(cancelledAngle+lateAngle+onTimeAngle);
+    
+  }
+  
 }
