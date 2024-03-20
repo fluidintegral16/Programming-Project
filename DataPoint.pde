@@ -1,5 +1,6 @@
 import java.util.Date;
-import java.util.Map; // added for dictionary - Habiba
+import java.util.Map; // added for dictionary - Habiba (4pm, 12/03)
+import java.util.LinkedHashMap; // added to make keySet() in order - Habiba (3pm, 20/03)
 
 class DataPoint
 {
@@ -24,7 +25,7 @@ class DataPoint
   int Cancelled;  /// Boolean
   int Diverted;    /// Boolean
   int Distance;
-  HashMap flightDict;
+  Map<String, Object> flightDict; // changed from HashMap - Habiba (3pm, 20/03)
 
 
   DataPoint(String FlightDateUnRef, String IATA_Code_Marketing_Airline, int Flight_Number_Marketing_Airline,
@@ -34,7 +35,7 @@ class DataPoint
   {
     // FlightDate - FlightDateUnRef, type changed from int to String type
     String [] x = FlightDateUnRef.split("/"); //<>//
-    FlightDate = Integer.parseInt(x[1]); //  Habiba - fixed bug storing full mmddyyyy into just storing dd
+    FlightDate = Integer.parseInt(x[1]); //  Habiba (4pm, 12/03) - fixed bug storing full mmddyyyy into just storing dd
     this.IATA_Code_Marketing_Airline = IATA_Code_Marketing_Airline;
     this.Flight_Number_Marketing_Airline = Flight_Number_Marketing_Airline;
     this.Origin = Origin;
@@ -52,9 +53,9 @@ class DataPoint
     this.Cancelled = Cancelled;                                                             /// Boolean
     this.Diverted = Diverted;                                                               /// Boolean
     this.Distance = Distance;
-    // dictionary added to allow ease of access to all variables
-    // fixes problem of needing a string to search for variable name - Habiba
-    flightDict = new HashMap<String, Object>();
+    
+    // dictionary added to allow ease of access to all variables - Habiba, (4pm, 12/03)
+    flightDict = new LinkedHashMap<>(); // switched from HashMap to keep order intact - Habiba (3pm, 20/03)
     flightDict.put("FlightDate", FlightDate);
     flightDict.put("IATA_Code_Marketing_Airline", IATA_Code_Marketing_Airline);
     flightDict.put("Flight_Number_Marketing_Airline", Flight_Number_Marketing_Airline);
@@ -78,104 +79,104 @@ class DataPoint
   }
 
 
-void draw()
-{
-}
-
-int originWac()
-{
-  return OriginWac;
-}
-
-String originState()
-{
-  return OriginState;
-}
-
-String originCityName()
-{
-  return OriginCityName;
-}
-
-String origin()
-{
-  return Origin;
-}
-
-String dest()
-{
-  return Dest;
-}
-
-int cancelled()
-{
-  return Cancelled;
-}
-
-int crsDepTime()
-{
-  return CRSDepTime;
-}
-
-int depTime()
-{
-  return DepTime;
-}
-
-int crsArrTime()
-{
-  return CRSArrTime;
-}
-
-int arrTime()
-{
-  return ArrTime;
-}
-
-
-void gatherData(DataPoint[] dataPoints)
-{
-  int appearances = 0;
-  int cancels = 0;
-  int lates = 0;
-  String currentAirport = Origin;
-  for (int j = 0; j < dataPoints.length; j++)
+  void draw()
   {
-    String comparingAirport = dataPoints[j].origin();
-    if (currentAirport.equals(comparingAirport))
+  }
+
+  int originWac()
+  {
+    return OriginWac;
+  }
+
+  String originState()
+  {
+    return OriginState;
+  }
+
+  String originCityName()
+  {
+    return OriginCityName;
+  }
+
+  String origin()
+  {
+    return Origin;
+  }
+
+  String dest()
+  {
+    return Dest;
+  }
+
+  int cancelled()
+  {
+    return Cancelled;
+  }
+
+  int crsDepTime()
+  {
+    return CRSDepTime;
+  }
+
+  int depTime()
+  {
+    return DepTime;
+  }
+
+  int crsArrTime()
+  {
+    return CRSArrTime;
+  }
+
+  int arrTime()
+  {
+    return ArrTime;
+  }
+
+
+  void gatherData(DataPoint[] dataPoints)
+  {
+    int appearances = 0;
+    int cancels = 0;
+    int lates = 0;
+    String currentAirport = Origin;
+    for (int j = 0; j < dataPoints.length; j++)
     {
-      appearances++;
-      if (DataPoints[j].cancelled()==1)
+      String comparingAirport = dataPoints[j].origin();
+      if (currentAirport.equals(comparingAirport))
       {
-        cancels++;
-      }
-      if (DataPoints[j].crsDepTime() < DataPoints[j].depTime())
-      {
-        lates++;
+        appearances++;
+        if (DataPoints[j].cancelled()==1)
+        {
+          cancels++;
+        }
+        if (DataPoints[j].crsDepTime() < DataPoints[j].depTime())
+        {
+          lates++;
+        }
       }
     }
+    println(Origin);
+    println("Flights out: " + appearances);
+    println("Late Departures: " + lates);
+    println("Cancellations: " + cancels);
+
+
+    double percentCancelled = float(cancels)/float(appearances)*100;
+    double percentLate = float(lates)/float(appearances)*100;
+    double percentOnTime = 100-percentLate-percentCancelled;
+    println("On time: " + percentOnTime + "%\nLate: " + percentLate + "%\nCancelled: " + percentCancelled + "%");
+
+    double cancelledAngle = percentCancelled*PI/50;
+    double lateAngle = percentLate*PI/50;
+    double onTimeAngle = percentOnTime*PI/50;
+
+    double radians[];
+    radians = new double[3];
+    radians[0] = onTimeAngle;
+    radians[1] = lateAngle;
+    radians[2] = cancelledAngle;
+
+    println(cancelledAngle+lateAngle+onTimeAngle);
   }
-  println(Origin);
-  println("Flights out: " + appearances);
-  println("Late Departures: " + lates);
-  println("Cancellations: " + cancels);
-
-
-  double percentCancelled = float(cancels)/float(appearances)*100;
-  double percentLate = float(lates)/float(appearances)*100;
-  double percentOnTime = 100-percentLate-percentCancelled;
-  println("On time: " + percentOnTime + "%\nLate: " + percentLate + "%\nCancelled: " + percentCancelled + "%");
-
-  double cancelledAngle = percentCancelled*PI/50;
-  double lateAngle = percentLate*PI/50;
-  double onTimeAngle = percentOnTime*PI/50;
-
-  double radians[];
-  radians = new double[3];
-  radians[0] = onTimeAngle;
-  radians[1] = lateAngle;
-  radians[2] = cancelledAngle;
-
-  println(cancelledAngle+lateAngle+onTimeAngle);
-}
 }
