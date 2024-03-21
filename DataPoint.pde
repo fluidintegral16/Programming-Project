@@ -74,8 +74,29 @@ class DataPoint
     flightDict.put("Cancelled", Cancelled);
     flightDict.put("Diverted", Diverted);
     flightDict.put("Distance", Distance);
-
     // Arnav Sanghi, Added the constructor class to assign the values to each flight object, 8pm, 8/3/2024
+
+// added to make more user friendly than 1s and 0s - Habiba (6pm, 20/03)
+    switch((int)flightDict.get("Diverted"))
+    {
+      case 1:
+        flightDict.replace("Diverted", "Yes");
+        break;
+      case 0:
+        flightDict.replace("Diverted", "No");
+        break;
+    }
+    switch((int)flightDict.get("Cancelled"))
+    {
+      case 1:
+        flightDict.replace("Cancelled", "Yes");
+        flightDict.replace("ArrTime", "--");
+        flightDict.replace("DepTime", "--");
+        break;
+      case 0:
+        flightDict.replace("Cancelled", "No");
+        break;
+     }
   }
 
 
