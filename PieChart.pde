@@ -4,10 +4,11 @@
 // delayed angle in radians = pi/10
 // cancelled angle in radians = 2pi/5
 class PieChart{
-  
-float onTimeAngle = (3 * PI) / 2;
-float delayedAngle = PI/10;
-float cancelledAngle = (2 * PI) / 5;
+
+  float[] angles = DataPoints[809].gatherData(DataPoints);
+  float onTimeAngle = angles[0];
+  float delayedAngle = angles[1];
+  float cancelledAngle = angles[2];
 
 
 void setup(){
