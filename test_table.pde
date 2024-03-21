@@ -9,12 +9,18 @@ ArrayList<Integer> cancellationsOut;
 ArrayList<Integer> cancellationsIn;
 ArrayList<Integer> lateDepartures;
 ArrayList<Integer> lateArrivals;
+UserQueriesDisplay categoryLine, line2, line3;
 
 void setup()
 {
-  size (1200, 700);
+  size (1400, 800);
   table = loadTable("flights2k.csv", "header");   // flights2k flights_full
   DataPoints = new DataPoint[table.getRowCount()];   //last value is in 563738  563737  1999
+
+  categoryLine = new UserQueriesDisplay(0, 0, 8, 25);
+  line2 = new UserQueriesDisplay(2, 1, 8, 25);
+  line3 = new UserQueriesDisplay(69, 2, 8, 25);
+
   println("Table Row Count: " + table.getRowCount());
   int time = millis();
   println("Loading of table took " + (time) + " milliseconds to run\n");
@@ -33,7 +39,7 @@ void setup()
   gatherDisplayableData();
   int time2 = millis();
   println("Part 2 took " + (time2-time1) + " milliseconds to run\n");
-
+  
 
   DataPoints[13].gatherData(DataPoints);
 }
@@ -46,6 +52,9 @@ void draw()
   text(DataPoints[0].ArrTime, 100, 25 + 50);
   text(DataPoints[0].Cancelled, 100, 25 + 75);
   text(DataPoints[0].Distance, 100, 25 + 100);
+  categoryLine.draw();
+  line2.draw();
+  line3.draw();
 }
 
 // Arnav Sanghi, created a method, to take the data from table and create each flight as an object with its respective variables, 7pm, 8/3/2024
