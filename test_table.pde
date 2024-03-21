@@ -1,6 +1,7 @@
 import java.util.Date;
 Table table;
 DataPoint DataPoints[];
+
 ArrayList<String> airportWACs;
 ArrayList<String> airports;
 ArrayList<Integer> flightsOut;
@@ -9,10 +10,16 @@ ArrayList<Integer> cancellationsOut;
 ArrayList<Integer> cancellationsIn;
 ArrayList<Integer> lateDepartures;
 ArrayList<Integer> lateArrivals;
+testImage testss;
+PImage testImag; 
+
+PImage planeImag;
+planeTest planess;
 
 void setup()
 {
-  size (1200, 700);
+  // Arnav Sanghi, Loaded the table and initizlized the array, 7pm, 8/3/2024
+  size (1400, 800);
   table = loadTable("flights2k.csv", "header");   // flights2k flights_full
   DataPoints = new DataPoint[table.getRowCount()];   //last value is in 563738  563737  1999
   println("Table Row Count: " + table.getRowCount());
@@ -36,16 +43,24 @@ void setup()
 
 
   DataPoints[13].gatherData(DataPoints);
+
+  testImag = loadImage("test.png"); 
+  testss = new testImage (0,0,testImag);
+  
+  planeImag = loadImage("plane.png");
+  planess = new planeTest (planeImag);
 }
 
 void draw()
 {
   background(255);
   fill(0);
-  text(DataPoints[0].CRSArrTime, 100, 25 + 25);
-  text(DataPoints[0].ArrTime, 100, 25 + 50);
-  text(DataPoints[0].Cancelled, 100, 25 + 75);
-  text(DataPoints[0].Distance, 100, 25 + 100);
+  //text(DataPoints[0].CRSArrTime, 100, 25 + 25);
+  //text(DataPoints[0].ArrTime, 100, 25 + 50);
+  //text(DataPoints[0].Cancelled, 100, 25 + 75);
+  //text(DataPoints[0].Distance, 100, 25 + 100);
+  testss.draw();
+  planess.draw();
 }
 
 // Arnav Sanghi, created a method, to take the data from table and create each flight as an object with its respective variables, 7pm, 8/3/2024
@@ -163,3 +178,53 @@ void gatherDisplayableData()
   }
   println("National Totals of Flights Out: " + nationalFlights + " : " + nationalLates + " : " + nationalCancels);
 }
+
+
+void keyPressed(){
+    if (keyCode == UP){
+       testss.zoomIn = true;
+       testss.zoomOut = false;
+    }
+    if (keyCode == DOWN){
+       testss.zoomOut = true;
+       testss.zoomIn = false;
+    }
+    if (keyCode == 'W'){
+       testss.panUp = true;
+       testss.panDown = false;
+    }
+    if (keyCode == 'S'){
+       testss.panDown = true;
+       testss.panUp = false;
+    }
+    if (keyCode == 'A'){
+       testss.panLeft = true;
+       testss.panRight = false;
+    }
+    if (keyCode == 'D'){
+       testss.panRight = true;
+       testss.panLeft = false;
+    }
+  }
+  
+  void keyReleased(){
+    if (keyCode == UP){
+       testss.zoomIn = false;
+    }
+    if (keyCode == DOWN){
+       testss.zoomOut = false;
+    }
+    if (keyCode == 'W'){
+       testss.panUp = false;
+    }
+    if (keyCode == 'S'){
+       testss.panDown = false;
+    }
+    if (keyCode == 'A'){
+       testss.panLeft = false;
+    }
+    if (keyCode == 'D'){
+       testss.panRight = false;
+    }
+    
+  }
