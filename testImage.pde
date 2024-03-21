@@ -6,7 +6,10 @@ class testImage {
   int y;
   int currentY;
   int direction;
-  PImage myImage;
+  
+  //PImage myImage;
+  PImage[] myImages = new PImage[1];
+  
   float scale;
   float xPan;
   float yPan;
@@ -18,11 +21,11 @@ class testImage {
   boolean panRight;
   
 
-  testImage(int xpos, int ypos, PImage userImage){
+  testImage(int xpos, int ypos, PImage[] userImage){
     x = xpos;
     y = ypos;
-    myImage = userImage;
-    scale = 0.8;
+    myImages = userImage;
+    scale = 0.9;
     xPan = 600;
     yPan = 350;
     zoomIn = false;
@@ -38,7 +41,9 @@ class testImage {
         translate(width/2, height/2);
         scale(scale);
         translate(-xPan, -yPan);
-        image(myImage, x, y, MAPWIDTH, MAPHEIGHT);
+        for (int i = 0; i < imagesForMap.length; i++){
+          image(myImages[i], x, y, MAPWIDTH, MAPHEIGHT);
+        }
         
         if (zoomIn){
            scale *= 1.04;
