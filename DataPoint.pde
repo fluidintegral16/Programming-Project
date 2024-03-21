@@ -132,8 +132,8 @@ int arrTime()
   return ArrTime;
 }
 
-
-void gatherData(DataPoint[] dataPoints)
+// Siddhi - altering function so it returns an array of floats which will store the angles needed to display the statistics on the Pie Chart - 20/3/24 
+float[] gatherDisplayableData(DataPoint[] dataPoints)
 {
   int appearances = 0;
   int cancels = 0;
@@ -160,22 +160,24 @@ void gatherData(DataPoint[] dataPoints)
   println("Late Departures: " + lates);
   println("Cancellations: " + cancels);
 
+  // Siddhi - altering the code to account for PieChart parameter requirements
 
-  double percentCancelled = float(cancels)/float(appearances)*100;
-  double percentLate = float(lates)/float(appearances)*100;
-  double percentOnTime = 100-percentLate-percentCancelled;
+  float percentCancelled = float(cancels)/float(appearances)*100;
+  float percentLate = float(lates)/float(appearances)*100;
+  float percentOnTime = 100-percentLate-percentCancelled;
   println("On time: " + percentOnTime + "%\nLate: " + percentLate + "%\nCancelled: " + percentCancelled + "%");
 
-  double cancelledAngle = percentCancelled*PI/50;
-  double lateAngle = percentLate*PI/50;
-  double onTimeAngle = percentOnTime*PI/50;
+  float cancelledAngle = percentCancelled*PI/50;
+  float lateAngle = percentLate*PI/50;
+  float onTimeAngle = percentOnTime*PI/50;
 
-  double radians[];
-  radians = new double[3];
+  float radians[];
+  radians = new float[3];
   radians[0] = onTimeAngle;
   radians[1] = lateAngle;
   radians[2] = cancelledAngle;
 
   println(cancelledAngle+lateAngle+onTimeAngle);
+  return radians;
 }
 }
