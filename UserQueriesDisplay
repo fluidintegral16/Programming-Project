@@ -1,23 +1,18 @@
 import java.util.Set;
-//import java.util.Map;
 import java.util.Collection; 
 class UserQueriesDisplay //
 {
 
   int rowNum;
   int queryResultNum;
-  int x, y;
   String label;
-  color hovering;
   PFont font;
-  int green;
-  float textSize;
+  int x; 
+// changed y value to constant + removed from constructor, x!=constant as it gets mutated during runtime - Habiba (3pm, 25/03)
   
-  UserQueriesDisplay(int rowNum, int queryResultNum, int x, int y)
+  UserQueriesDisplay(int rowNum, int queryResultNum, int x) 
   {
-    this.rowNum = rowNum; this.x = x; this.y = y; this.queryResultNum = queryResultNum;
-    green = 200;
-    hovering = color(0, green, 0);
+    this.rowNum = rowNum; this.queryResultNum = queryResultNum; this.x = x;
   }
   
   void draw(){
@@ -32,22 +27,22 @@ class UserQueriesDisplay //
       textAlign(CENTER);
       if (queryResultNum==0){
         if (key.equals("FlightDate")){
-          text("Flight", x+16, y-7);
-          text("Date", x+16, y+6);
-          text("Jan 2023", x+17, y+16);
+          text("Flight", x+16, Y-7);
+          text("Date", x+16, Y+6);
+          text("Jan 2023", x+17, Y+16);
         }
         else if (key.equals("IATA_Code_Marketing_Airline")) {
-          text("IATA", x+4, y-10);
-          text("Code", x+4, y);
-          text("Marketing", x+4, y+10);
-          text("Airline", x+4, y+20);
+          text("IATA", x+4, Y-10);
+          text("Code", x+4, Y);
+          text("Marketing", x+4, Y+10);
+          text("Airline", x+4, Y+20);
         }
         else if (key.equals("Flight_Number_Marketing_Airline")){
-          text("Flight", x+4, y-10);
-          text("Number", x+4, y);
-          text("Marketing", x+4, y+10);
-          text("Airline", x+4, y+20); 
-        } else text(label, x, y);
+          text("Flight", x+4, Y-10);
+          text("Number", x+4, Y);
+          text("Marketing", x+4, Y+10);
+          text("Airline", x+4, Y+20); 
+        } else text(label, x, Y);
       }
       valueDraw();
     }
@@ -61,7 +56,6 @@ class UserQueriesDisplay //
       textAlign(CENTER);
       text(""+value+"", x, (DOWN_GAP*(queryResultNum+1))+SEPARATING_LINE_Y_COORD);
       x += ACROSS_GAP;
-      textSize = textAscent() + textDescent();
     }else text("N/A", x+10, (DOWN_GAP*(queryResultNum+1))+SEPARATING_LINE_Y_COORD);
   }
 }
