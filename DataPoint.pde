@@ -33,9 +33,9 @@ class DataPoint
     String Dest, String DestCityName, String DestState, int DestWac,
     int CRSDepTime, int DepTime, int CRSArrTime, int ArrTime, int Cancelled, int Diverted, int Distance)
   {
-    // FlightDate - FlightDateUnRef, type changed from int to String type
-    String [] x = FlightDateUnRef.split("/"); //<>//
-    FlightDate = Integer.parseInt(x[1]); //  Habiba (4pm, 12/03) - fixed bug storing full mmddyyyy into just storing dd
+    // FlightDate - FlightDateUnRef, type changed from int to String type - Habiba (4pm, 12/03) 
+    String [] x = FlightDateUnRef.split("/"); // month = x[0], year + time = x[2]
+    FlightDate = Integer.parseInt(x[1]); //  Habiba (4pm, 12/03) - allows direct access to day date as an int value
     this.IATA_Code_Marketing_Airline = IATA_Code_Marketing_Airline;
     this.Flight_Number_Marketing_Airline = Flight_Number_Marketing_Airline;
     this.Origin = Origin;
