@@ -1,3 +1,4 @@
+
 class MapButton {
   int x, y, w, h, id;
   
@@ -17,6 +18,15 @@ class MapButton {
   void setY(int y) {
     this.y = y;
   }
+   // Method to set the button's width
+  void setWidth(int w) {
+    this.w = w;
+  }
+
+  // Method to set the button's height
+  void setHeight(int h) {
+    this.h = h;
+  }
   
   void display() {
     noStroke();
@@ -24,10 +34,11 @@ class MapButton {
     if (isHovering(mouseX, mouseY)) {
       fill(100);
     }
+   
     rect(x, y, w, h);
   }
   
-  boolean isHovering(int mx, int my) {
+  boolean isHovering(float mx, float my) {
     return mx > x && mx < x + w && my > y && my < y + h;
   }
 }

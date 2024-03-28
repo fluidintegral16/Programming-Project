@@ -22,16 +22,16 @@ class planeTest{
   
   void draw () {
     image(myImage, i, ypos, imageWidth, imageHeight);
-    if((i+=5)>=1299){
+    if((i+=10)>=1299){
       i=-100;
       ypos = random(100, 800);
     }
     image(myImage, j, k, imageWidth, imageHeight);
     k = j;
-    if((j+=3)>=1299) j=-200; 
+    if((j+=5)>=1299) j=-200; 
     image(myImage, t, h, imageWidth, imageHeight);
     t = -h + 1250;
-    if((h-=4)<-200) h = 1250;
+    if((h-=6)<-200) h = 1250;
 
 
   }

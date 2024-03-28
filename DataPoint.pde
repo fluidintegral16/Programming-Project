@@ -1,7 +1,7 @@
 import java.util.Date;
 import java.util.Map; // added for dictionary - Habiba
 
-class DataPoint {
+class DataPoint1 {
    // Arnav Sanghi, Added the instance variables for each flight object to have, 8pm, 8/3/2024.
  
    int FlightDate;   /// Date
@@ -27,7 +27,7 @@ class DataPoint {
   
    // Arnav Sanghi, Added the constructor class to assign the values to each flight object, 8pm, 8/3/2024
    
-  DataPoint(String FlightDateUnRef, String IATA_Code_Marketing_Airline, int Flight_Number_Marketing_Airline,
+  DataPoint1(String FlightDateUnRef, String IATA_Code_Marketing_Airline, int Flight_Number_Marketing_Airline,
      String Origin, String OriginCityName, String OriginState, int OriginWac,
      String Dest, String DestCityName, String DestState, int DestWac,
      int CRSDepTime, int DepTime, int CRSArrTime, int ArrTime, int Cancelled, int Diverted, int Distance){
