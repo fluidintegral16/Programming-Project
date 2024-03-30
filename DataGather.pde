@@ -106,10 +106,6 @@ void gatherDisplayableData() // Ben  function to gather the universal data to di
 
 int[] returnFlights(int fromDate, int toDate, String originAirportCode, String destinationAirportCode, String lateness) // uses nikkis parameters to return only the airports that fit
 {
-  ArrayList<Integer> inDate = new ArrayList<Integer>();
-  ArrayList<Integer> fromCorrectAirport = new ArrayList<Integer>();
-  ArrayList<Integer> toCorrectAirport = new ArrayList<Integer>();
-  ArrayList<Integer> correctLateness = new ArrayList<Integer>();
   ArrayList<Integer> masterList = new ArrayList<Integer>();
 
   for (int i = 0; i < DataPoints.length; i++)

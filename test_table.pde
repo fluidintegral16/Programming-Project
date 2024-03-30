@@ -30,12 +30,12 @@ String sampleAirports [];
 stateAirports stateAirport;
 PImage state;
 
-int rowsThatFitParameters [];
+int rowNums[];
 String airportsInZone [];
 int selectedIndex = 0;
 
 // ALL THE ARRAYS WITH THE WAC'S FOR THE MAP  --- USED AS INPUT FOR THE returnAirportsInArea FUNCTION
-int stateSelect = 0;
+int stateSelect = 1;
 int[] wacGrouping0 = { 74 }; //TEXAS
 int[] wacGrouping1 = { 1 }; //ALASKA
 int[] wacGrouping2 = { 81, 86 }; // ARIZONA, NEW MEXICO
@@ -111,10 +111,10 @@ void draw(){
   background(255);
   fill(0);
 
-  text(DataPoints[0].CRSArrTime, 100, 25 + 25);
-  text(DataPoints[0].ArrTime, 100, 25 + 50);
-  text(DataPoints[0].Cancelled, 100, 25 + 75);
-  text(DataPoints[0].Distance, 100, 25 + 100);
+  //text(DataPoints[0].CRSArrTime, 100, 25 + 25);
+  //text(DataPoints[0].ArrTime, 100, 25 + 50);
+  //text(DataPoints[0].Cancelled, 100, 25 + 75);
+  //text(DataPoints[0].Distance, 100, 25 + 100);
 //  categoryLine.draw();
 //  line2.draw();
 //  line3.draw();
@@ -129,7 +129,7 @@ void draw(){
   
   stateAirport.draw();
   stateAirport.mousePressed();
-
+  
   //drawPieChart.setup();
 }
 
