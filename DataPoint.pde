@@ -1,5 +1,6 @@
-import java.util.Date; //<>//
-import java.util.Map; // added for dictionary - Habiba
+import java.util.Date;
+import java.util.Map; // added for dictionary - Habiba (4pm, 12/03)
+import java.util.LinkedHashMap; // added to make keySet() in order - Habiba (3pm, 20/03)
 
 class DataPoint
 {
@@ -24,7 +25,7 @@ class DataPoint
   int Cancelled;  /// Boolean
   int Diverted;    /// Boolean
   int Distance;
-  HashMap flightDict;
+  Map<String, Object> flightDict; // changed from HashMap - Habiba (3pm, 20/03)
 
 
   DataPoint(String FlightDateUnRef, String IATA_Code_Marketing_Airline, int Flight_Number_Marketing_Airline,
@@ -32,9 +33,9 @@ class DataPoint
     String Dest, String DestCityName, String DestState, int DestWac,
     int CRSDepTime, int DepTime, int CRSArrTime, int ArrTime, int Cancelled, int Diverted, int Distance)
   {
-    // FlightDate - FlightDateUnRef, type changed from int to String type
-    String [] x = FlightDateUnRef.split("/");
-    FlightDate = Integer.parseInt(x[1]); //  Habiba - fixed bug storing full mmddyyyy into just storing dd
+    // FlightDate - FlightDateUnRef, type changed from int to String type - Habiba (4pm, 12/03) 
+    String [] x = FlightDateUnRef.split("/"); // month = x[0], year + time = x[2]
+    FlightDate = Integer.parseInt(x[1]); //  Habiba (4pm, 12/03) - allows direct access to day date as an int value
     this.IATA_Code_Marketing_Airline = IATA_Code_Marketing_Airline;
     this.Flight_Number_Marketing_Airline = Flight_Number_Marketing_Airline;
     this.Origin = Origin;
@@ -52,9 +53,9 @@ class DataPoint
     this.Cancelled = Cancelled;                                                             /// Boolean
     this.Diverted = Diverted;                                                               /// Boolean
     this.Distance = Distance;
-    // dictionary added to allow ease of access to all variables
-    // fixes problem of needing a string to search for variable name - Habiba
-    flightDict = new HashMap<String, Object>();
+    
+    // dictionary added to allow ease of access to all variables - Habiba, (4pm, 12/03)
+    flightDict = new LinkedHashMap<>(); // switched from HashMap to keep order intact - Habiba (3pm, 20/03)
     flightDict.put("FlightDate", FlightDate);
     flightDict.put("IATA_Code_Marketing_Airline", IATA_Code_Marketing_Airline);
     flightDict.put("Flight_Number_Marketing_Airline", Flight_Number_Marketing_Airline);
@@ -73,8 +74,29 @@ class DataPoint
     flightDict.put("Cancelled", Cancelled);
     flightDict.put("Diverted", Diverted);
     flightDict.put("Distance", Distance);
-
     // Arnav Sanghi, Added the constructor class to assign the values to each flight object, 8pm, 8/3/2024
+
+// added to make more user friendly than 1s and 0s - Habiba (6pm, 20/03)
+    switch((int)flightDict.get("Diverted"))
+    {
+      case 1:
+        flightDict.replace("Diverted", "Yes");
+        break;
+      case 0:
+        flightDict.replace("Diverted", "No");
+        break;
+    }
+    switch((int)flightDict.get("Cancelled"))
+    {
+      case 1:
+        flightDict.replace("Cancelled", "Yes");
+        flightDict.replace("ArrTime", "--");
+        flightDict.replace("DepTime", "--");
+        break;
+      case 0:
+        flightDict.replace("Cancelled", "No");
+        break;
+     }
   }
 
 
@@ -138,7 +160,6 @@ class DataPoint
     return ArrTime;
   }
 
-
   float[] gatherData(DataPoint[] dataPoints)
   {
     int appearances = 0;
@@ -181,7 +202,7 @@ class DataPoint
     radians[1] = lateAngle;
     radians[2] = cancelledAngle;
 
-    println(cancelledAngle+lateAngle+onTimeAngle);
+    //println(cancelledAngle+lateAngle+onTimeAngle);
     return radians;
   }
 }
