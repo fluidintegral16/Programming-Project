@@ -20,7 +20,7 @@ PImage testImag;
 PImage planeImag;
 planeTest planess;
 Project projectFile;
-int Pictures = 21;
+int Pictures = 22;
 int currentImageNumber = 0;
 MapButton MapButtons;
 Map maps;
