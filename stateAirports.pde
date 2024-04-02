@@ -66,7 +66,7 @@ class stateAirports{
   }
   
   
-  void mousePressed(){
+  int mousePressed(){
     for (int counter = 0; counter < totalAirports; counter++) {
         int rowIndex = counter / maxRectPerRow; // Calculate the row index
         int colIndex = counter % maxRectPerRow; // Calculate the column index
@@ -76,10 +76,12 @@ class stateAirports{
         if (isMouseOverRectangle(boxX + shiftX, boxY + shiftY, rectWidth, rectHeight)){
           if (mousePressed){
             println(counter);
+            return counter;
           }
         }
     
     }
+    return -1;
   }
   
 }

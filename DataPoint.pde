@@ -25,7 +25,7 @@ class DataPoint
   int Cancelled;  /// Boolean
   int Diverted;    /// Boolean
   int Distance;
-  Map<String, Object> flightDict; // changed from HashMap - Habiba (3pm, 20/03)
+  LinkedHashMap<String, Object> flightDict; // changed from HashMap - Habiba (3pm, 20/03)
 
 
   DataPoint(String FlightDateUnRef, String IATA_Code_Marketing_Airline, int Flight_Number_Marketing_Airline,

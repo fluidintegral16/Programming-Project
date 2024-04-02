@@ -30,14 +30,20 @@ String sampleAirports [];
 stateAirports stateAirport;
 PImage state;
 
-int rowsThatFitParameters [];
+int rowNums[];
 String airportsInZone [];
 int selectedIndex = 0;
 
+boolean screen1 = true;
+boolean screen2 = false;
+boolean screen3 = false;
+boolean screen4 = false;
+boolean screen5 = false;
+
 // ALL THE ARRAYS WITH THE WAC'S FOR THE MAP  --- USED AS INPUT FOR THE returnAirportsInArea FUNCTION
 int stateSelect = 0;
-int[] wacGrouping0 = { 74 }; //TEXAS
-int[] wacGrouping1 = { 1 }; //ALASKA
+int[] wacGrouping0 = { 74 }; // TEXAS
+int[] wacGrouping1 = { 1, 2 }; // ALASKA, HAWAII
 int[] wacGrouping2 = { 81, 86 }; // ARIZONA, NEW MEXICO
 int[] wacGrouping3 = { 91 }; // CALIFORNIA
 int[] wacGrouping4 = { 92, 93 }; // OREGON, WASHINGTON
@@ -57,6 +63,7 @@ int[] wacGrouping17 = { 38, 36 }; // VIRGINIA, NORTH CAROLINA
 int[] wacGrouping18 = { 44, 39, 23 }; // OHIO, WV, PA
 int[] wacGrouping19 = { 12, 35, 31, 21, 15, 11, 13, 14, 16 }; // MAINE, MD, DE, NJ, RI, CT, MA, NH, VT
 int[] wacGrouping20 = { 22 }; // NEW YORK
+int[] wacGrouping21 = {  }; //
 
 PieChart drawPieChart;
 
@@ -72,8 +79,6 @@ void setup(){
   init_flights(table, DataPoints);
 
   queryLines = new UserQueriesDisplay[1000]; // prelim. size, can be extended later depending on search result sizes - Habiba (3pm, 25/03)
-  
-  init_flights(table, DataPoints);
 
   airportWACs = new ArrayList<String>();
   airports = new ArrayList<String>();
@@ -85,9 +90,7 @@ void setup(){
   lateDepartures = new ArrayList<Integer>();
   //gatherDisplayableData();
 
-  rowNums = returnFlights(1, 3, "JFK", "LAX", ""); // dummy array to be replaced with ben's array of search row numbers - Habiba (4pm, 25/03) - updated to the actual array - Ben (5:30 30/03)
-  init_query_table(rowNums);
-  draw_query_table(rowNums);
+  
   
   testImag = loadImage("main.png"); 
   planeImag = loadImage("plane.png");
@@ -100,8 +103,8 @@ void setup(){
   maps = new Map(main, imagesForMap);
   testss = new testImage (0,0, imagesForMap, main);
   state = loadImage("state.png");
-  airportsInZone = switchFunction(stateSelect); // returns the airports in the state for arnav's function
-  stateAirport = new stateAirports(state, airportsInZone);
+  
+  
 
   drawPieChart = new PieChart();
 
@@ -111,26 +114,70 @@ void draw(){
   background(255);
   fill(0);
 
-  text(DataPoints[0].CRSArrTime, 100, 25 + 25);
-  text(DataPoints[0].ArrTime, 100, 25 + 50);
-  text(DataPoints[0].Cancelled, 100, 25 + 75);
-  text(DataPoints[0].Distance, 100, 25 + 100);
+  //text(DataPoints[0].CRSArrTime, 100, 25 + 25);
+  //text(DataPoints[0].ArrTime, 100, 25 + 50);
+  //text(DataPoints[0].Cancelled, 100, 25 + 75);
+  //text(DataPoints[0].Distance, 100, 25 + 100);
 //  categoryLine.draw();
 //  line2.draw();
 //  line3.draw();
   
   sample = imagesForMap[currentImageNumber];
   
-  //testss.draw(sample);
-  //maps.draw();
-  //planess.draw();
-  //projectFile.draw();
+  
+  if(screen1) 
+  {
+    projectFile.draw(); //Nikkis screen
+    int buttonResult = projectFile.mousePressed(); //Nikkis screen
+    if(buttonResult == 0)
+    {
+      screen1 = false;
+      screen2 = true;
+      println("ITS BROKEN");
+      rowNums = returnFlights(1, 3, "JFK", "LAX", ""); // dummy array to be replaced with array of row numbers - Habiba (4pm, 25/03) - updated to the actual array, still needs the info from nikki - Ben (5:30 30/03)
+      init_query_table(rowNums);
+      draw_query_table(rowNums);
+    }
+    else if(buttonResult == 1)// make a button to get to the map page and have it return 1
+    {
+      screen1 = false;
+      screen3 = true;
+    }
+  }
+  
+  if(screen2) draw_query_table(rowNums); //Habiba's??? - how work
+  
+  if(screen3)
+  {
+    testss.draw(sample);
+    maps.draw(); //Selecty Map that highlights
+    stateSelect = maps.mousePressed();
+    planess.draw(); //Moving Planes
+    if(stateSelect != -1)
+    {
+      screen3 = false;
+      screen4 = true;
+      airportsInZone = switchFunction(stateSelect); // returns the airports in the state for arnav's function
+      stateAirport = new stateAirports(state, airportsInZone);
+    }
+    
+  }
   
   
-  stateAirport.draw();
-  stateAirport.mousePressed();
-
-  //drawPieChart.setup();
+  if(screen4)
+  {
+    stateAirport.draw();
+    int airportSelected = stateAirport.mousePressed();
+    if(airportSelected != -1)
+    {
+      screen4 = false;
+      screen5 = true;
+      drawPieChart.setup(airportsInZone[airportSelected]);
+    }
+    
+  }
+  
+  if(screen5) drawPieChart.draw();
 }
 
 // Arnav Sanghi, created a method, to take the data from table and create each flight as an object with its respective variables, 7pm, 8/3/2024
