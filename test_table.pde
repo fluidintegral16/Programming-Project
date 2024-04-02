@@ -116,6 +116,7 @@ void setup(){
 }
 
 void draw(){
+  background(255);
   fill(0);
   
   sample = imagesForMap[currentImageNumber];
