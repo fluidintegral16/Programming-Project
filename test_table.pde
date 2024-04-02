@@ -74,8 +74,6 @@ void setup(){
 
   rowNums = new int[10]; // dummy array to be replaced with ben's array of search row numbers - Habiba (4pm, 25/03)
   init_query_table(rowNums);
-  draw_query_table(rowNums);
-
   
   ///////// 
   
@@ -99,8 +97,6 @@ void setup(){
   numberOfPages = 0;
   tempArray = new int[rowNums.length];
   flipPage = false; endReached = false; nextPage = false; drawPage = false;
-  boxX = 1320; boxY = 760; wdth = 50, hght = 20;
-  
 
 }
 
@@ -111,9 +107,6 @@ void draw(){
   text(DataPoints[0].ArrTime, 100, 25 + 50);
   text(DataPoints[0].Cancelled, 100, 25 + 75);
   text(DataPoints[0].Distance, 100, 25 + 100);
-//  categoryLine.draw();
-//  line2.draw();
-//  line3.draw();
   
   sample = imagesForMap[currentImageNumber];
   
@@ -126,7 +119,6 @@ void draw(){
   stateAirport.draw();
   stateAirport.mousePressed();
 
-  mousePressed(mouseX, mouseY);
   if (nextPage || flipPage){
     init_query_table(tempArray);
     flipPage = false;
@@ -138,6 +130,7 @@ void draw(){
   if (drawPage){
     draw_query_table(tempArray);
   }
+  mousePressed(mouseX, mouseY);
 
 }
 
