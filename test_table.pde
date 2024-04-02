@@ -41,9 +41,9 @@ int lengthCopy;
 String airportsInZone [];
 int selectedIndex = 0;
 
-boolean screen1 = true;
+boolean screen1 = false;
 boolean screen2 = false;
-boolean screen3 = false;
+boolean screen3 = true;
 boolean screen4 = false;
 boolean screen5 = false;
 
@@ -116,7 +116,7 @@ void setup(){
 }
 
 void draw(){
-  background(255);
+  
   fill(0);
   
   sample = imagesForMap[currentImageNumber];
@@ -124,6 +124,7 @@ void draw(){
   
   if(screen1) 
   {
+    background(255);
     projectFile.draw(); //Nikkis screen
     int buttonResult = projectFile.mousePressed(); //Nikkis screen
     if(buttonResult == 0)
@@ -162,6 +163,7 @@ void draw(){
   
   if(screen3)
   {
+    background(255);
     testss.draw(sample);
     maps.draw(); //Selecty Map that highlights
     stateSelect = maps.mousePressed();
@@ -179,6 +181,7 @@ void draw(){
   
   if(screen4)
   {
+    background(255);
     stateAirport.draw();
     int airportSelected = stateAirport.mousePressed();
     if(airportSelected != -1)
@@ -190,7 +193,11 @@ void draw(){
     
   }
   
-  if(screen5) drawPieChart.draw();
+  if(screen5) 
+  {
+    background(255);
+    drawPieChart.draw();
+  }
 }
 
 // Arnav Sanghi, created a method, to take the data from table and create each flight as an object with its respective variables, 7pm, 8/3/2024
