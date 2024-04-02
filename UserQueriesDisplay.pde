@@ -13,6 +13,8 @@ class UserQueriesDisplay //
   String label;
   PFont font;
   int x;
+
+  int boxX = 1320; int boxY = 760; int wdth = 50; int hght = 20;
   
   // changed y value to constant + removed from constructor, x!=constant as it gets mutated during runtime - Habiba (3pm, 25/03)
   boolean hovering; // added scrolling feature - 2pm (28/03)
@@ -25,6 +27,8 @@ class UserQueriesDisplay //
   }
   
   void draw(){
+// next page button - Habiba+Siddhi (4pm, 01/04)
+    fill(255); rect(boxX, boxY, wdth, hght);
     Set<String> keys = DataPoints[rowNum].flightDict.keySet();
     mousePressed(mouseY);
     if (hovering){

@@ -38,7 +38,6 @@ int numberOfPages;
 boolean flipPage, nextPage, drawPage, endReached;
 int lengthCopy;
 
-int rowNums[];
 String airportsInZone [];
 int selectedIndex = 0;
 
@@ -110,9 +109,7 @@ void setup(){
   testss = new testImage (0,0, imagesForMap, main);
   state = loadImage("state.png");
 
-  numberOfPages = 0;
-  tempArray = new int[rowNums.length];
-  flipPage = false; endReached = false; nextPage = false; drawPage = false;
+  
 
   drawPieChart = new PieChart();
 
@@ -132,10 +129,12 @@ void draw(){
     {
       screen1 = false;
       screen2 = true;
-      println("ITS BROKEN");
-      rowNums = returnFlights(1, 3, "JFK", "LAX", ""); // dummy array to be replaced with array of row numbers - Habiba (4pm, 25/03) - updated to the actual array, still needs the info from nikki - Ben (5:30 30/03)
+      rowNums = returnFlights(1, 10, "LAS", "AUS", ""); // dummy array to be replaced with array of row numbers - Habiba (4pm, 25/03) - updated to the actual array, still needs the info from nikki - Ben (5:30 30/03)
       init_query_table(rowNums);
       draw_query_table(rowNums);
+      numberOfPages = 0;
+      tempArray = new int[rowNums.length];
+      flipPage = false; endReached = false; nextPage = false; drawPage = false;
     }
     else if(buttonResult == 1)// make a button to get to the map page and have it return 1
     {
