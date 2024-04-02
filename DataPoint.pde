@@ -25,7 +25,7 @@ class DataPoint
   int Cancelled;  /// Boolean
   int Diverted;    /// Boolean
   int Distance;
-  Map<String, Object> flightDict; // changed from HashMap - Habiba (3pm, 20/03)
+  LinkedHashMap<String, Object> flightDict; // changed from HashMap - Habiba (3pm, 20/03)
 
 
   DataPoint(String FlightDateUnRef, String IATA_Code_Marketing_Airline, int Flight_Number_Marketing_Airline,
@@ -104,6 +104,12 @@ class DataPoint
   {
   }
 
+
+  int flightDate()
+  {
+    return FlightDate;
+  }
+  
   int originWac()
   {
     return OriginWac;
@@ -154,8 +160,7 @@ class DataPoint
     return ArrTime;
   }
 
-
-  void gatherData(DataPoint[] dataPoints)
+  float[] gatherData(DataPoint[] dataPoints)
   {
     int appearances = 0;
     int cancels = 0;
@@ -182,22 +187,22 @@ class DataPoint
     println("Late Departures: " + lates);
     println("Cancellations: " + cancels);
 
-
-    double percentCancelled = float(cancels)/float(appearances)*100;
-    double percentLate = float(lates)/float(appearances)*100;
-    double percentOnTime = 100-percentLate-percentCancelled;
+    float percentCancelled = float(cancels)/float(appearances)*100;
+    float percentLate = float(lates)/float(appearances)*100;
+    float percentOnTime = 100-percentLate-percentCancelled;
     println("On time: " + percentOnTime + "%\nLate: " + percentLate + "%\nCancelled: " + percentCancelled + "%");
 
-    double cancelledAngle = percentCancelled*PI/50;
-    double lateAngle = percentLate*PI/50;
-    double onTimeAngle = percentOnTime*PI/50;
+    float cancelledAngle = percentCancelled*PI/50;
+    float lateAngle = percentLate*PI/50;
+    float onTimeAngle = percentOnTime*PI/50;
 
-    double radians[];
-    radians = new double[3];
+    float radians[];
+    radians = new float[3];
     radians[0] = onTimeAngle;
     radians[1] = lateAngle;
     radians[2] = cancelledAngle;
 
-    println(cancelledAngle+lateAngle+onTimeAngle);
+    //println(cancelledAngle+lateAngle+onTimeAngle);
+    return radians;
   }
 }

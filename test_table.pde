@@ -1,7 +1,7 @@
 import java.util.Date;
 Table table;
-
 DataPoint DataPoints[];
+
 ArrayList<String> airportWACs;
 ArrayList<String> airports;
 ArrayList<Integer> flightsOut;
@@ -10,6 +10,8 @@ ArrayList<Integer> cancellationsOut;
 ArrayList<Integer> cancellationsIn;
 ArrayList<Integer> lateDepartures;
 ArrayList<Integer> lateArrivals;
+
+UserQueriesDisplay categoryLine, line2, line3;
 UserQueriesDisplay queryLines[];
 UserQueriesDisplay testAccess; // dummy instance used to access UserDisplayQueries attributes - Habiba 3pm, (02/04)
 
@@ -36,6 +38,42 @@ int numberOfPages;
 boolean flipPage, nextPage, drawPage, endReached;
 int lengthCopy;
 
+int rowNums[];
+String airportsInZone [];
+int selectedIndex = 0;
+
+boolean screen1 = true;
+boolean screen2 = false;
+boolean screen3 = false;
+boolean screen4 = false;
+boolean screen5 = false;
+
+// ALL THE ARRAYS WITH THE WAC'S FOR THE MAP  --- USED AS INPUT FOR THE returnAirportsInArea FUNCTION
+int stateSelect = 0;
+int[] wacGrouping0 = { 74 }; // TEXAS
+int[] wacGrouping1 = { 1, 2 }; // ALASKA, HAWAII
+int[] wacGrouping2 = { 81, 86 }; // ARIZONA, NEW MEXICO
+int[] wacGrouping3 = { 91 }; // CALIFORNIA
+int[] wacGrouping4 = { 92, 93 }; // OREGON, WASHINGTON
+int[] wacGrouping5 = { 85, 87 }; // NEVADA, UTAH
+int[] wacGrouping6 = { 83, 84 }; // IDAHO
+int[] wacGrouping7 = { 88 }; // WYOMING
+int[] wacGrouping8 = { 82 }; // COLORADO
+int[] wacGrouping9 = { 66 }; // NORTH DAKOTA
+int[] wacGrouping10 = { 63, 61 }; // MINNESOTA, IOWA
+int[] wacGrouping11 = { 67, 65, 62 }; // SOUTH DAKOTA, NEBRASAKA, KANSAS
+int[] wacGrouping12 = { 73, 64, 71, 72 }; // OKLAHOMA, MISSOURI, ARKANSAS, LOUISIANA
+int[] wacGrouping13 = { 43 }; // MICHIGAN
+int[] wacGrouping14 = { 52, 42, 53 }; // KENTUCKY, INDIANA, TENNESSEE
+int[] wacGrouping15 = { 51, 53, 34, 37 }; // ALABAMA, MS, GA ,SOUTH CAROLINA
+int[] wacGrouping16 = { 33 }; // FLORIDA
+int[] wacGrouping17 = { 38, 36 }; // VIRGINIA, NORTH CAROLINA
+int[] wacGrouping18 = { 44, 39, 23 }; // OHIO, WV, PA
+int[] wacGrouping19 = { 12, 35, 31, 21, 15, 11, 13, 14, 16 }; // MAINE, MD, DE, NJ, RI, CT, MA, NH, VT
+int[] wacGrouping20 = { 22 }; // NEW YORK
+int[] wacGrouping21 = {  }; //
+
+PieChart drawPieChart;
 
 
 void setup(){
@@ -43,21 +81,13 @@ void setup(){
   background(255);
    // Arnav Sanghi, Loaded the table and initizlized the array, 7pm, 8/3/2024
    
-  table = loadTable("flights_full.csv", "header");
-  //table = loadTable("flights2k.csv", "header");   // flights2k flights_full
-  DataPoints = new DataPoint[table.getRowCount()];   //last value is in 563738  563737  1999\
+  table = loadTable("flights_full.csv", "header");   // flights2k flights_full
+  DataPoints = new DataPoint[table.getRowCount()];   //last value is in 563738
   
   init_flights(table, DataPoints);
 
   queryLines = new UserQueriesDisplay[1000]; // prelim. size, can be extended later depending on search result sizes - Habiba (3pm, 25/03)
   testAccess = new UserQueriesDisplay(0,0,0);
-
-  println("Table Row Count: " + table.getRowCount());
-  int time = millis();
-  println("Loading of table took " + (time) + " milliseconds to run\n");
-  
-  int time1 = millis();
-  println("Initialisation of DataPoints took " + (time1-time) + " milliseconds to run\n");
   airportWACs = new ArrayList<String>();
   airports = new ArrayList<String>();
   flightsOut = new ArrayList<Integer>();
@@ -66,16 +96,7 @@ void setup(){
   cancellationsIn = new ArrayList<Integer>();
   lateArrivals = new ArrayList<Integer>();
   lateDepartures = new ArrayList<Integer>();
-  gatherDisplayableData();
-  int time2 = millis();
-  println("Part 2 took " + (time2-time1) + " milliseconds to run\n");
   
-  DataPoints[13].gatherData(DataPoints);
-
-  rowNums = new int[10]; // dummy array to be replaced with ben's array of search row numbers - Habiba (4pm, 25/03)
-  init_query_table(rowNums);
-  
-  ///////// 
   
   testImag = loadImage("main.png"); 
   planeImag = loadImage("plane.png");
@@ -88,38 +109,44 @@ void setup(){
   maps = new Map(main, imagesForMap);
   testss = new testImage (0,0, imagesForMap, main);
   state = loadImage("state.png");
-  sampleAirports = new String[3];
-  sampleAirports[0] = "JFK";
-  sampleAirports[1] = "LAX";
-  sampleAirports[2] = "LAX";
-  stateAirport = new stateAirports(state, sampleAirports);
 
   numberOfPages = 0;
   tempArray = new int[rowNums.length];
   flipPage = false; endReached = false; nextPage = false; drawPage = false;
 
+  drawPieChart = new PieChart();
+
 }
 
 void draw(){
   fill(0);
-
-  text(DataPoints[0].CRSArrTime, 100, 25 + 25);
-  text(DataPoints[0].ArrTime, 100, 25 + 50);
-  text(DataPoints[0].Cancelled, 100, 25 + 75);
-  text(DataPoints[0].Distance, 100, 25 + 100);
   
   sample = imagesForMap[currentImageNumber];
   
-  //testss.draw(sample);
-  //maps.draw();
-  //planess.draw();
-  //projectFile.draw();
   
+  if(screen1) 
+  {
+    projectFile.draw(); //Nikkis screen
+    int buttonResult = projectFile.mousePressed(); //Nikkis screen
+    if(buttonResult == 0)
+    {
+      screen1 = false;
+      screen2 = true;
+      println("ITS BROKEN");
+      rowNums = returnFlights(1, 3, "JFK", "LAX", ""); // dummy array to be replaced with array of row numbers - Habiba (4pm, 25/03) - updated to the actual array, still needs the info from nikki - Ben (5:30 30/03)
+      init_query_table(rowNums);
+      draw_query_table(rowNums);
+    }
+    else if(buttonResult == 1)// make a button to get to the map page and have it return 1
+    {
+      screen1 = false;
+      screen3 = true;
+    }
+  }
   
-  stateAirport.draw();
-  stateAirport.mousePressed();
-
-  if (nextPage || flipPage){
+  if(screen2) 
+  {
+ if (nextPage || flipPage){
     init_query_table(tempArray);
     flipPage = false;
     drawPage = true;
@@ -130,8 +157,40 @@ void draw(){
   if (drawPage){
     draw_query_table(tempArray);
   }
-  mousePressed(mouseX, mouseY);
-
+  mousePressed(mouseX, mouseY); //Habiba's??? - how work
+  }
+  
+  if(screen3)
+  {
+    testss.draw(sample);
+    maps.draw(); //Selecty Map that highlights
+    stateSelect = maps.mousePressed();
+    planess.draw(); //Moving Planes
+    if(stateSelect != -1)
+    {
+      screen3 = false;
+      screen4 = true;
+      airportsInZone = switchFunction(stateSelect); // returns the airports in the state for arnav's function
+      stateAirport = new stateAirports(state, airportsInZone);
+    }
+    
+  }
+  
+  
+  if(screen4)
+  {
+    stateAirport.draw();
+    int airportSelected = stateAirport.mousePressed();
+    if(airportSelected != -1)
+    {
+      screen4 = false;
+      screen5 = true;
+      drawPieChart.setup(airportsInZone[airportSelected]);
+    }
+    
+  }
+  
+  if(screen5) drawPieChart.draw();
 }
 
 // Arnav Sanghi, created a method, to take the data from table and create each flight as an object with its respective variables, 7pm, 8/3/2024
@@ -161,6 +220,7 @@ void init_query_table(int [] rowNums)
     }
   }
 }
+
 void draw_query_table(int [] rowNums)
 {
   for (int i=0; i<rowNums.length; i++)
@@ -201,69 +261,65 @@ void flipPages() {
     endReached = true;
   }
 }
-void gatherDisplayableData()
-{
-  // -Ben   Creates a list of all the airports by area code
-  for(int i = 0; i < DataPoints.length; i++)
-  {
-    boolean valid = true;
-    for(int j = 0; j < airportWACs.size(); j++)
-    {
-      // int currentOrigin = DataPoints[i].originWac();
-      String currentOrigin = DataPoints[i].origin();
-      // int comparingOrigin = airportWACs.get(j);
-      String comparingOrigin = airports.get(j);
-      if(comparingOrigin.equals(currentOrigin))
-      {
-        valid = false;
-      }
-    }
-    
 
-void keyPressed(){
-    if (keyCode == UP){
+void keyPressed()
+{
+    if (keyCode == UP)
+    {
        testss.zoomIn = true;
        testss.zoomOut = false;
     }
-    if (keyCode == DOWN){
+    if (keyCode == DOWN)
+    {
        testss.zoomOut = true;
        testss.zoomIn = false;
     }
-    if (keyCode == 'W'){
+    if (keyCode == 'W')
+    {
        testss.panUp = true;
        testss.panDown = false;
     }
-    if (keyCode == 'S'){
+    if (keyCode == 'S')
+    {
        testss.panDown = true;
        testss.panUp = false;
     }
-    if (keyCode == 'A'){
+    if (keyCode == 'A')
+    {
        testss.panLeft = true;
        testss.panRight = false;
     }
-    if (keyCode == 'D'){
+    if (keyCode == 'D')
+    {
        testss.panRight = true;
        testss.panLeft = false;
     }
-  }
+}
   
-  void keyReleased(){
-    if (keyCode == UP){
+  void keyReleased()
+  {
+    if (keyCode == UP)
+    {
        testss.zoomIn = false;
     }
-    if (keyCode == DOWN){
+    if (keyCode == DOWN)
+    {
        testss.zoomOut = false;
     }
-    if (keyCode == 'W'){
+    if (keyCode == 'W')
+    {
        testss.panUp = false;
     }
-    if (keyCode == 'S'){
+    if (keyCode == 'S')
+    {
        testss.panDown = false;
     }
-    if (keyCode == 'A'){
+    if (keyCode == 'A')
+    {
        testss.panLeft = false;
     }
-    if (keyCode == 'D'){
+    if (keyCode == 'D')
+    {
        testss.panRight = false;
     }
     

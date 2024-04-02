@@ -43,4 +43,19 @@ class Project{
     searchButton.display();
   }
   
+  int mousePressed()
+  {
+    
+      if (mousePressed)
+      {
+        if (searchButton.isHovering(mouseX, mouseY))
+        {
+          println(0);
+          return 0;
+        }
+      }
+    
+    return -1;
+  }
+  
 }
