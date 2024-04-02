@@ -113,6 +113,7 @@ int[] returnFlights(int fromDate, int toDate, String originAirportCode, String d
     if (((DataPoints[i].flightDate() >= fromDate) && (DataPoints[i].flightDate() <= toDate)) && (DataPoints[i].origin().equals(originAirportCode)) && (DataPoints[i].dest().equals(destinationAirportCode)))
     {
       masterList.add(i);
+      println(i);
     }
   }
   int masterArray[] = new int[masterList.size()];
@@ -211,48 +212,69 @@ String[] switchFunction(int stateSelect)
   return airportsInZone;
 }
 
-float[] gatherData(String airport)
+float[] gatherData(String airport) // for pie chart
 {
-  int appearances = 0;
-  int cancels = 0;
-  int lates = 0;
+  int outAppearances = 0;
+  int outCancels = 0;
+  int outLates = 0;
+  int inAppearances = 0;
+  int inCancels = 0;
+  int inLates = 0;
   String currentAirport = airport;
   for (int j = 0; j < DataPoints.length; j++)
   {
     String comparingAirport = DataPoints[j].origin();
     if (currentAirport.equals(comparingAirport))
     {
-      appearances++;
+      outAppearances++;
       if (DataPoints[j].cancelled()==1)
       {
-        cancels++;
+        outCancels++;
       }
       if (DataPoints[j].crsDepTime() < DataPoints[j].depTime())
       {
-        lates++;
+        outLates++;
+      }
+    }
+    comparingAirport = DataPoints[j].dest();
+    if (currentAirport.equals(comparingAirport))
+    {
+      inAppearances++;
+      if (DataPoints[j].cancelled()==1)
+      {
+        inCancels++;
+      }
+      if (DataPoints[j].crsDepTime() < DataPoints[j].depTime())
+      {
+        inLates++;
       }
     }
   }
+  println();
   println(airport);
-  println("Flights out: " + appearances);
-  println("Late Departures: " + lates);
-  println("Cancellations: " + cancels);
+  println("Flights out: " + outAppearances);
+  println("Late Departures: " + outLates);
+  println("Cancellations going out: " + outCancels);
+  println("Flights in: " + inAppearances);
+  println("Late Arrivals: " + inLates);
+  println("Cancellations coming in: " + inCancels);
 
-  float percentCancelled = float(cancels)/float(appearances)*100;
-  float percentLate = float(lates)/float(appearances)*100;
-  float percentOnTime = 100-percentLate-percentCancelled;
-  println("On time: " + percentOnTime + "%\nLate: " + percentLate + "%\nCancelled: " + percentCancelled + "%");
+  float percentCancelledOut = float(outCancels)/float(outAppearances)*100;
+  float percentLateOut = float(outLates)/float(outAppearances)*100;
+  float percentOnTimeOut = 100-percentLateOut-percentCancelledOut;
+  float percentCancelledIn = float(inCancels)/float(inAppearances)*100;
+  float percentLateIn = float(inLates)/float(inAppearances)*100;
+  float percentOnTimeIn = 100-percentLateIn-percentCancelledIn;
+  //println("On time: " + percentOnTimeOut + "%\nLate: " + percentLateOut + "%\nCancelled: " + percentCancelledOut + "%");
 
-  float cancelledAngle = percentCancelled*PI/50;
-  float lateAngle = percentLate*PI/50;
-  float onTimeAngle = percentOnTime*PI/50;
+  float cancelledAngleOut = percentCancelledOut*PI/50;
+  float lateAngleOut = percentLateOut*PI/50;
+  float onTimeAngleOut = percentOnTimeOut*PI/50;
+  float cancelledAngleIn = percentCancelledIn*PI/50;
+  float lateAngleIn = percentLateIn*PI/50;
+  float onTimeAngleIn = percentOnTimeIn*PI/50;
 
-  float radians[];
-  radians = new float[3];
-  radians[0] = onTimeAngle;
-  radians[1] = lateAngle;
-  radians[2] = cancelledAngle;
+  float radians[] = {onTimeAngleOut, lateAngleOut, cancelledAngleOut, onTimeAngleIn, lateAngleIn, cancelledAngleIn, outAppearances};
 
-  println(cancelledAngle+lateAngle+onTimeAngle);
   return radians;
 }
