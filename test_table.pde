@@ -13,6 +13,7 @@ ArrayList<Integer> lateArrivals;
 
 UserQueriesDisplay categoryLine, line2, line3;
 UserQueriesDisplay queryLines[];
+UserQueriesDisplay testAccess; // dummy instance used to access UserDisplayQueries attributes - Habiba 3pm, (02/04)
 
 testImage testss;
 PImage testImag; 
@@ -29,8 +30,14 @@ PImage sample;
 String sampleAirports []; 
 stateAirports stateAirport;
 PImage state;
+int [] rowNums; 
 
-int rowNums[];
+// variables added to facilitate switching pages in UserQueriesDisplay board - Habiba + Siddhi (3pm, 01/04)
+int [] tempArray;
+int numberOfPages;
+boolean flipPage, nextPage, drawPage, endReached;
+int lengthCopy;
+
 String airportsInZone [];
 int selectedIndex = 0;
 
@@ -68,9 +75,9 @@ int[] wacGrouping21 = {  }; //
 PieChart drawPieChart;
 
 
-
 void setup(){
   size (1400,800);
+  background(255);
    // Arnav Sanghi, Loaded the table and initizlized the array, 7pm, 8/3/2024
    
   table = loadTable("flights_full.csv", "header");   // flights2k flights_full
@@ -79,7 +86,7 @@ void setup(){
   init_flights(table, DataPoints);
 
   queryLines = new UserQueriesDisplay[1000]; // prelim. size, can be extended later depending on search result sizes - Habiba (3pm, 25/03)
-
+  testAccess = new UserQueriesDisplay(0,0,0);
   airportWACs = new ArrayList<String>();
   airports = new ArrayList<String>();
   flightsOut = new ArrayList<Integer>();
@@ -88,8 +95,6 @@ void setup(){
   cancellationsIn = new ArrayList<Integer>();
   lateArrivals = new ArrayList<Integer>();
   lateDepartures = new ArrayList<Integer>();
-  //gatherDisplayableData();
-
   
   
   testImag = loadImage("main.png"); 
@@ -103,7 +108,7 @@ void setup(){
   maps = new Map(main, imagesForMap);
   testss = new testImage (0,0, imagesForMap, main);
   state = loadImage("state.png");
-  
+
   
 
   drawPieChart = new PieChart();
@@ -111,16 +116,7 @@ void setup(){
 }
 
 void draw(){
-  background(255);
   fill(0);
-
-  //text(DataPoints[0].CRSArrTime, 100, 25 + 25);
-  //text(DataPoints[0].ArrTime, 100, 25 + 50);
-  //text(DataPoints[0].Cancelled, 100, 25 + 75);
-  //text(DataPoints[0].Distance, 100, 25 + 100);
-//  categoryLine.draw();
-//  line2.draw();
-//  line3.draw();
   
   sample = imagesForMap[currentImageNumber];
   
@@ -133,10 +129,12 @@ void draw(){
     {
       screen1 = false;
       screen2 = true;
-      println("ITS BROKEN");
-      rowNums = returnFlights(1, 3, "JFK", "LAX", ""); // dummy array to be replaced with array of row numbers - Habiba (4pm, 25/03) - updated to the actual array, still needs the info from nikki - Ben (5:30 30/03)
+      rowNums = returnFlights(1, 10, "LAS", "AUS", ""); // dummy array to be replaced with array of row numbers - Habiba (4pm, 25/03) - updated to the actual array, still needs the info from nikki - Ben (5:30 30/03)
       init_query_table(rowNums);
       draw_query_table(rowNums);
+      numberOfPages = 0;
+      tempArray = new int[rowNums.length];
+      flipPage = false; endReached = false; nextPage = false; drawPage = false;
     }
     else if(buttonResult == 1)// make a button to get to the map page and have it return 1
     {
@@ -145,7 +143,21 @@ void draw(){
     }
   }
   
-  if(screen2) draw_query_table(rowNums); //Habiba's??? - how work
+  if(screen2) 
+  {
+ if (nextPage || flipPage){
+    init_query_table(tempArray);
+    flipPage = false;
+    drawPage = true;
+  }
+  else {
+    draw_query_table(rowNums);
+  }
+  if (drawPage){
+    draw_query_table(tempArray);
+  }
+  mousePressed(mouseX, mouseY); //Habiba's??? - how work
+  }
   
   if(screen3)
   {
@@ -202,7 +214,8 @@ void init_query_table(int [] rowNums)
     int queryNum = 0;
     for (int rowNum=0; rowNum<rowNums.length; rowNum++)
     {
-      queryLines[queryNum] = new UserQueriesDisplay(rowNum, queryNum++, 8);
+      queryLines[queryNum] = new UserQueriesDisplay(rowNums[rowNum], queryNum++, 8);
+      // changed parameter rowNum to rowNums[rowNum] to work with real not dummy values (Habiba+Siddhi 4pm, 01/04)
     }
   }
 }
@@ -210,8 +223,41 @@ void init_query_table(int [] rowNums)
 void draw_query_table(int [] rowNums)
 {
   for (int i=0; i<rowNums.length; i++)
-  {
-    queryLines[i].draw();
+  { // changed the way the function approaches drawing the table depending on page number (Habiba+Siddhi 4pm, 01/04)
+    if (nextPage){
+      flipPage = true;
+      nextPage = false;
+    }
+    queryLines[i].mousePressed(mouseY);
+    if (endReached) {
+      for (int j=0; j<lengthCopy; j++){
+        queryLines[j].draw();
+      }
+    }
+    else queryLines[i].draw();
+  }
+}
+
+// separate mousePressed method from highlighting feature to access next page - Habiba+Siddhi 5pm(01/04)
+void mousePressed(float mX, float mY){
+  if (mousePressed && mX > testAccess.boxX && mX < testAccess.boxX + testAccess.wdth 
+    && mY > testAccess.boxY && mY < testAccess.boxY + testAccess.hght){
+    flipPages();
+    nextPage = true;
+    println("Next");
+  }
+}
+
+// automated process of flipping any number of pages of user queries - Habiba+Siddhi(5pm 01/04)
+void flipPages() {
+  int startIndex = ((35*numberOfPages)>=rowNums.length)? rowNums.length-lengthCopy : 35*numberOfPages;   
+  numberOfPages++;
+  println(startIndex);
+  lengthCopy = ((startIndex+35)>=rowNums.length)? rowNums.length - startIndex : 35;
+  println(lengthCopy);
+  arrayCopy(rowNums, startIndex, tempArray, 0, lengthCopy);
+  if (lengthCopy!=35){
+    endReached = true;
   }
 }
 
