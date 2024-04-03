@@ -13,6 +13,9 @@ class UserQueriesDisplay //
   String label;
   PFont font;
   int x;
+  int nextBoxX, boxY;
+  int backBoxX;
+  PImage forwardArrow, backwardArrow;
   
   // changed y value to constant + removed from constructor, x!=constant as it gets mutated during runtime - Habiba (3pm, 25/03)
   boolean hovering; // added scrolling feature - 2pm (28/03)
@@ -22,11 +25,19 @@ class UserQueriesDisplay //
     this.rowNum = rowNum; this.queryResultNum = queryResultNum; this.x = x;
     hovering = false;
     background(0);
+    nextBoxX = 1320; boxY = 765; wdth = 50; hght = 20; // initialized separate box coordinates - Habiba+Siddhi 5pm 03/04
+    backBoxX = 1265; 
+    forwardArrow = loadImage("forward arrow.jpg");
+    backwardArrow = loadImage("backward arrow.png");
   }
   
   void draw(){
     Set<String> keys = DataPoints[rowNum].flightDict.keySet();
-    mousePressed(mouseY);
+    fill(255);
+    rect(nextBoxX, boxY, wdth, hght);
+    rect(backBoxX, boxY, wdth, hght);
+    image(backwardArrow, backBoxX+15, boxY+1);
+    image(forwardArrow, nextBoxX+10, boxY+1);
     if (hovering){
       fill(255, 0, 0, 50); rect (0, SEPARATING_LINE_Y_COORD+(DOWN_GAP*(queryResultNum))+2, 1400, textDescent()+DOWN_GAP-0.5);
     }
