@@ -184,8 +184,8 @@ void setup() {
   drawPieChart = new PieChart();
 }
 
-void draw() {
-
+void draw() 
+{
   fill(0);
 
   sample = imagesForMap[currentImageNumber];
@@ -260,8 +260,8 @@ void draw() {
       drawPieChart.setup(airportsInZone[airportSelected]);
     }
   }
-
-  if (screen5)
+  
+  if(screen5) 
   {
     background(255);
     drawPieChart.draw();
