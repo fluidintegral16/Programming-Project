@@ -1,3 +1,6 @@
+// Arnav Sanghi, create a class that is in control of the userInteraction with the map of moving around and the zoomIn and zoomOut
+// allowing the user to have full control with arrow keys and making it more intuitive (23/03/24)
+
 final int MAPHEIGHT = 800;
 final int MAPWIDTH = 1400;
  
