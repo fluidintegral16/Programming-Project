@@ -101,6 +101,11 @@ class Map {
     buttons[20].setY(203);
     buttons[20].setWidth(45);
     buttons[20].setHeight(45);
+    //wisconsin
+    buttons[21].setX(855);
+    buttons[21].setY(200);
+    buttons[21].setWidth(50); 
+    buttons[21].setHeight(50);
   }
 
   void draw() {
