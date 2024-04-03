@@ -1,3 +1,7 @@
+// Arnav Sanghi, create a class which contains the airports for the state clicked on the map screen, 
+// depending on the state clicked, it will return boxes with the number of airports present there,
+// this screen acts as a transition from the main map, to visual data for each airport (27/03/24)
+
 class stateAirports{
   int x;
   int y;
