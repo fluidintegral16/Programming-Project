@@ -12,7 +12,6 @@ ArrayList<Integer> lateDepartures;
 ArrayList<Integer> lateArrivals;
 int[] nationalData;
 
-UserQueriesDisplay categoryLine, line2, line3;
 UserQueriesDisplay queryLines[];
 UserQueriesDisplay testAccess; // dummy instance used to access UserDisplayQueries attributes - Habiba 3pm, (02/04)
 
@@ -38,8 +37,9 @@ int [] rowNums;
 // variables added to facilitate switching pages in UserQueriesDisplay board - Habiba + Siddhi (3pm, 01/04)
 int [] tempArray;
 int numberOfPages;
-boolean flipPage, nextPage, drawPage, endReached;
+boolean flipPage, nextPage, drawPage, endReached, backPage;
 int lengthCopy;
+int startIndex;
 
 String airportsInZone [];
 int selectedIndex = 0;
@@ -113,7 +113,8 @@ void setup() {
   init_flights(table, DataPoints);
 
   queryLines = new UserQueriesDisplay[1000]; // prelim. size, can be extended later depending on search result sizes - Habiba (3pm, 25/03)
-  testAccess = new UserQueriesDisplay(0, 0, 0);
+  
+  testAccess = new UserQueriesDisplay(0,0,0);
   airportWACs = new ArrayList<String>();
   airports = new ArrayList<String>();
   flightsOut = new ArrayList<Integer>();
@@ -184,8 +185,10 @@ void setup() {
   testss = new testImage (0, 0, imagesForMap, main);
   state = loadImage("state.png");
 
+  numberOfPages = 0;
+  tempArray = new int[rowNums.length];
+  flipPage = false; endReached = false; nextPage = false; drawPage = false; backPage = false;
   nationalData = gatherDisplayableData();
-
   drawPieChart = new PieChart();
 }
 
@@ -226,17 +229,18 @@ void draw()
 
   if (screen2)
   {
-    if (nextPage || flipPage) {
-      init_query_table(tempArray);
-      flipPage = false;
-      drawPage = true;
-    } else {
-      draw_query_table(rowNums);
-    }
-    if (drawPage) {
-      draw_query_table(tempArray);
-    }
-    mousePressed(mouseX, mouseY); //Habiba's??? - how work
+  mousePressed(mouseX, mouseY); //Habiba's??? - how work
+ if (nextPage || flipPage|| backPage){
+    init_query_table(tempArray);
+    flipPage = false;
+    drawPage = true;
+  }
+  if (drawPage){
+    draw_query_table(tempArray);
+  } else {
+    draw_query_table(rowNums);
+  }
+  
   }
 
   if (screen3)
@@ -306,42 +310,64 @@ void init_query_table(int [] rowNums)
 
 void draw_query_table(int [] rowNums)
 {
-  for (int i=0; i<rowNums.length; i++)
-  { // changed the way the function approaches drawing the table depending on page number (Habiba+Siddhi 4pm, 01/04)
-    if (nextPage) {
-      flipPage = true;
-      nextPage = false;
-    }
-    queryLines[i].mousePressed(mouseY);
+  if (rowNums!=null)
+  { // changed position of this for loop to vastly improve efficiency - Habiba 4pm 03/04
     if (endReached) {
-      for (int j=0; j<lengthCopy; j++) {
+      for (int j=0; j<lengthCopy; j++){
+        queryLines[j].mousePressed(mouseY); // fixed bug that stopped final page from highlighting - Habiba 4pm 03/04
         queryLines[j].draw();
       }
-    } else queryLines[i].draw();
+      println("END");
+    }
+    else{
+      for (int i=0; i<rowNums.length; i++)
+      { // changed the way the function approaches drawing the table depending on page number (Habiba+Siddhi 4pm, 01/04)
+        if (nextPage){
+          flipPage = true;
+          nextPage = false;
+        }
+        queryLines[i].mousePressed(mouseY);
+        queryLines[i].draw();
+      }
+    }
   }
 }
-
 // separate mousePressed method from highlighting feature to access next page - Habiba+Siddhi 5pm(01/04)
-void mousePressed(float mX, float mY) {
-  if (mousePressed && mX > testAccess.boxX && mX < testAccess.boxX + testAccess.wdth
-    && mY > testAccess.boxY && mY < testAccess.boxY + testAccess.hght) {
-    flipPages();
+void mousePressed(float mX, float mY){
+  if (mousePressed && mX > testAccess.boxX && mX < testAccess.boxX + testAccess.wdth 
+    && mY > testAccess.boxY && mY < testAccess.boxY + testAccess.hght){
+    forwardPage();
     nextPage = true;
     println("Next");
+  }
+  else if (mousePressed && mX > testAccess.backBoxX && mX < testAccess.backBoxX + testAccess.wdth && mY > testAccess.boxY 
+    && mY < testAccess.boxY + testAccess.hght){
+    backPage();
+    backPage = true;
+    println("Back");   
   }
 }
 
 // automated process of flipping any number of pages of user queries - Habiba+Siddhi(5pm 01/04)
-void flipPages() {
-  int startIndex = ((35*numberOfPages)>=rowNums.length)? rowNums.length-lengthCopy : 35*numberOfPages;
-  numberOfPages++;
-  println(startIndex);
+// added backPage functionality and adjusted forwardPage to differentiate between them - Habiba+Siddhi 6pm 03/04
+void forwardPage() {
+  numberOfPages++; // moved position to fix bug where first page just refreshes instead of turning to page 2 - Habiba 11pm 03/04
+  startIndex = ((35*numberOfPages)>=rowNums.length)? rowNums.length-lengthCopy : 35*numberOfPages;  
   lengthCopy = ((startIndex+35)>=rowNums.length)? rowNums.length - startIndex : 35;
-  println(lengthCopy);
   arrayCopy(rowNums, startIndex, tempArray, 0, lengthCopy);
   if (lengthCopy!=35) {
     endReached = true;
   }
+}
+void backPage() {
+  if (numberOfPages != 0) 
+  {
+    startIndex = (startIndex>0)? startIndex - 35: 0;
+    numberOfPages--;
+  }
+  lengthCopy = 35;
+  arrayCopy(rowNums, startIndex, tempArray, 0, lengthCopy);
+  endReached = false;
 }
 
 // Arnav Sanghi, adding a keyPressed method (23/03/24)
