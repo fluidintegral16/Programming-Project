@@ -11,7 +11,7 @@ int[] gatherDisplayableData() // Ben  function to gather the universal data to d
       String currentOrigin = DataPoints[i].origin();
       // int comparingOrigin = airportWACs.get(j);
       String comparingOrigin = airports.get(j);
-      if (comparingOrigin.equals(currentOrigin))
+      if (comparingOrigin.equalsIgnoreCase(currentOrigin))
       {
         valid = false;
       }
@@ -112,7 +112,7 @@ int[] returnFlights(int fromDate, int toDate, String originAirportCode, String d
 
   for (int i = 0; i < DataPoints.length; i++)
   {
-    if (((DataPoints[i].flightDate() >= fromDate) && (DataPoints[i].flightDate() <= toDate)) && (DataPoints[i].origin().equals(originAirportCode)) && (DataPoints[i].dest().equals(destinationAirportCode)))
+    if (((DataPoints[i].flightDate() >= fromDate) && (DataPoints[i].flightDate() <= toDate)) && (DataPoints[i].origin().equalsIgnoreCase(originAirportCode)) && (DataPoints[i].dest().equalsIgnoreCase(destinationAirportCode)))
     {
       masterList.add(i);
       println(i);
@@ -142,7 +142,7 @@ String[] returnAirportsInArea(int[] whatZone) // returns the airports in the zon
         boolean notInList = true;
         for (int k = 0; k < airportsInArea.size(); k++)
         {
-          if ((DataPoints[j].origin()).equals(airportsInArea.get(k)))
+          if ((DataPoints[j].origin()).equalsIgnoreCase(airportsInArea.get(k)))
           {
             notInList = false;
           }
@@ -226,7 +226,7 @@ float[] gatherData(String airport) // for pie chart
   for (int j = 0; j < DataPoints.length; j++)
   {
     String comparingAirport = DataPoints[j].origin();
-    if (currentAirport.equals(comparingAirport))
+    if (currentAirport.equalsIgnoreCase(comparingAirport))
     {
       outAppearances++;
       if (DataPoints[j].cancelled()==1)

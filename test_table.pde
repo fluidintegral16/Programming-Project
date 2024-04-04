@@ -234,7 +234,19 @@ void draw()
     {
       screen1 = false;
       screen2 = true;
-      rowNums = returnFlights(1, 10, "LAS", "AUS", ""); // dummy array to be replaced with array of row numbers - Habiba (4pm, 25/03) - updated to the actual array, still needs the info from nikki - Ben (5:30 30/03)
+      fromTextInput.click(mouseX, mouseY);
+      int input1 = Integer.parseInt(fromTextInput.keyPressed());
+      fromTextInput.active = false;
+      toTextInput.click(mouseX, mouseY);
+      int input2 = Integer.parseInt(toTextInput.keyPressed());
+      toTextInput.active = false;
+      fromAirportInput.click(mouseX, mouseY);
+      String input3 = fromAirportInput.keyPressed();
+      fromAirportInput.active = false;
+      toAirportInput.click(mouseX, mouseY);
+      String input4 = toAirportInput.keyPressed();
+      toAirportInput.active = false;
+      rowNums = returnFlights(input1, input2, input3, input4, ""); // dummy array to be replaced with array of row numbers - Habiba (4pm, 25/03) - updated to the actual array, still needs the info from nikki - Ben (5:30 30/03)
       init_query_table(rowNums);
       draw_query_table(rowNums);
       numberOfPages = 0;

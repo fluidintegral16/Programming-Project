@@ -85,9 +85,9 @@ class Project{
   }
   
   void keyPressed() {
-    fromTextInput.keyPressed(key);
-    toTextInput.keyPressed(key);
-    fromAirportInput.keyPressed(key);
-    toAirportInput.keyPressed(key);
+    fromTextInput.keyPressed();
+    toTextInput.keyPressed();
+    fromAirportInput.keyPressed();
+    toAirportInput.keyPressed();
 }
 }
