@@ -16,6 +16,8 @@ UserQueriesDisplay categoryLine, line2, line3;
 UserQueriesDisplay queryLines[];
 UserQueriesDisplay testAccess; // dummy instance used to access UserDisplayQueries attributes - Habiba 3pm, (02/04)
 
+// Arnav Sanghi, initiating all the variables below and creating objects so that they can be merged (25/03/24)
+
 testImage testss;
 PImage testImag;
 PImage planeImag;
@@ -170,6 +172,8 @@ void setup() {
   stateImageArray[20] = state20Image;
   state21Image = loadImage("alaska.png");
   stateImageArray[21] = state21Image;
+
+  // Arnav Sanghi, calling method in set-up (25/03/24)
   planess = new planeTest (planeImag);
   projectFile = new Project(testImag);
   for (int i = 0; i < imagesForMap.length; i++) {
@@ -185,7 +189,10 @@ void setup() {
   drawPieChart = new PieChart();
 }
 
-void draw() {
+void draw() 
+{
+ // Arnav Sanghi, creating the original draw method, which calls upon all the other classes draw method and other methods used
+// place where a lot of the merging was done (30/03/24)
 
   fill(0);
 
@@ -337,6 +344,8 @@ void flipPages() {
   }
 }
 
+// Arnav Sanghi, adding a keyPressed method (23/03/24)
+
 void keyPressed()
 {
   if (keyCode == UP)
@@ -370,6 +379,8 @@ void keyPressed()
     testss.panLeft = false;
   }
 }
+
+// Arnav Sanghi, adding a keyReleased method (23/03/24)
 
 void keyReleased()
 {
