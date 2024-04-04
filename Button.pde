@@ -18,4 +18,17 @@ class Button {
     textAlign(CENTER, CENTER);
     text(label, x + width/2, y + height/2);
   }
+  
+  boolean isHovering(float mx, float my) 
+  {
+    return mx > x && mx < x + width && my > y && my < y + height;
+  }
+  
+  void setX(int x) {
+    this.x = x;
+  }
+  
+  void setY(int y) {
+    this.y = y;
+  }
 }
