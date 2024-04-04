@@ -1,5 +1,5 @@
 
-void gatherDisplayableData() // Ben  function to gather the universal data to display and compare
+int[] gatherDisplayableData() // Ben  function to gather the universal data to display and compare
 {
   // -Ben   Creates a list of all the airports by area code
   for (int i = 0; i < DataPoints.length; i++)
@@ -101,6 +101,8 @@ void gatherDisplayableData() // Ben  function to gather the universal data to di
     nationalCancels += cancellationsOut.get(i);
   }
   println("National Totals of Flights Out: " + nationalFlights + " : " + nationalLates + " : " + nationalCancels);
+  int[] nationalDataArray = { nationalFlights, nationalLates, nationalCancels };
+  return nationalDataArray;
 }
 
 
@@ -274,7 +276,7 @@ float[] gatherData(String airport) // for pie chart
   float lateAngleIn = percentLateIn*PI/50;
   float onTimeAngleIn = percentOnTimeIn*PI/50;
 
-  float radians[] = {onTimeAngleOut, lateAngleOut, cancelledAngleOut, onTimeAngleIn, lateAngleIn, cancelledAngleIn, outAppearances};
+  float radians[] = {onTimeAngleOut, lateAngleOut, cancelledAngleOut, onTimeAngleIn, lateAngleIn, cancelledAngleIn, outAppearances, outLates, outCancels, inAppearances, inLates, inCancels};
 
   return radians;
 }

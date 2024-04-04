@@ -10,6 +10,7 @@ ArrayList<Integer> cancellationsOut;
 ArrayList<Integer> cancellationsIn;
 ArrayList<Integer> lateDepartures;
 ArrayList<Integer> lateArrivals;
+int[] nationalData;
 
 UserQueriesDisplay categoryLine, line2, line3;
 UserQueriesDisplay queryLines[];
@@ -41,9 +42,9 @@ int lengthCopy;
 String airportsInZone [];
 int selectedIndex = 0;
 
-boolean screen1 = false;
+boolean screen1 = true;
 boolean screen2 = false;
-boolean screen3 = true;
+boolean screen3 = false;
 boolean screen4 = false;
 boolean screen5 = false;
 
@@ -179,13 +180,13 @@ void setup() {
   testss = new testImage (0, 0, imagesForMap, main);
   state = loadImage("state.png");
 
-
+  nationalData = gatherDisplayableData();
 
   drawPieChart = new PieChart();
 }
 
-void draw() 
-{
+void draw() {
+
   fill(0);
 
   sample = imagesForMap[currentImageNumber];
@@ -257,11 +258,11 @@ void draw()
     {
       screen4 = false;
       screen5 = true;
-      drawPieChart.setup(airportsInZone[airportSelected]);
+      drawPieChart.setup(airportsInZone[airportSelected], nationalData);
     }
   }
-  
-  if(screen5) 
+
+  if (screen5)
   {
     background(255);
     drawPieChart.draw();
