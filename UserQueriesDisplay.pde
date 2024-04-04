@@ -15,6 +15,8 @@ class UserQueriesDisplay //
   int x;
   int nextBoxX, boxY;
   int backBoxX;
+  int wdth;
+  int hght;
   PImage forwardArrow, backwardArrow;
   
   // changed y value to constant + removed from constructor, x!=constant as it gets mutated during runtime - Habiba (3pm, 25/03)
@@ -33,7 +35,6 @@ class UserQueriesDisplay //
   
   void draw(){
 // next page button - Habiba+Siddhi (4pm, 01/04)
-    fill(255); rect(boxX, boxY, wdth, hght);
     Set<String> keys = DataPoints[rowNum].flightDict.keySet();
     fill(255);
     rect(nextBoxX, boxY, wdth, hght);

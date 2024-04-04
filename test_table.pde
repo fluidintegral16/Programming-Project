@@ -44,9 +44,9 @@ int startIndex;
 String airportsInZone [];
 int selectedIndex = 0;
 
-boolean screen1 = true;
+boolean screen1 = false;
 boolean screen2 = false;
-boolean screen3 = false;
+boolean screen3 = true;
 boolean screen4 = false;
 boolean screen5 = false;
 
@@ -186,7 +186,6 @@ void setup() {
   state = loadImage("state.png");
 
   numberOfPages = 0;
-  tempArray = new int[rowNums.length];
   flipPage = false; endReached = false; nextPage = false; drawPage = false; backPage = false;
   nationalData = gatherDisplayableData();
   drawPieChart = new PieChart();
@@ -334,7 +333,7 @@ void draw_query_table(int [] rowNums)
 }
 // separate mousePressed method from highlighting feature to access next page - Habiba+Siddhi 5pm(01/04)
 void mousePressed(float mX, float mY){
-  if (mousePressed && mX > testAccess.boxX && mX < testAccess.boxX + testAccess.wdth 
+  if (mousePressed && mX > testAccess.nextBoxX && mX < testAccess.nextBoxX + testAccess.wdth 
     && mY > testAccess.boxY && mY < testAccess.boxY + testAccess.hght){
     forwardPage();
     nextPage = true;
