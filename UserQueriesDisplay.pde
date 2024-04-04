@@ -32,6 +32,8 @@ class UserQueriesDisplay //
   }
   
   void draw(){
+// next page button - Habiba+Siddhi (4pm, 01/04)
+    fill(255); rect(boxX, boxY, wdth, hght);
     Set<String> keys = DataPoints[rowNum].flightDict.keySet();
     fill(255);
     rect(nextBoxX, boxY, wdth, hght);
