@@ -20,6 +20,8 @@ UserQueriesDisplay testAccess; // dummy instance used to access UserDisplayQueri
 testImage testss;
 PImage testImag;
 PImage planeImag;
+PImage planeImag1;
+PImage planeImag2;
 planeTest planess;
 Project projectFile;
 int Pictures = 22;
@@ -132,6 +134,8 @@ void setup() {
 
   testImag = loadImage("main.png");
   planeImag = loadImage("plane.png");
+  planeImag1 = loadImage("plane1.png");
+  planeImag2 = loadImage("plane2.png");
 
   // SO. MANY. IMAGES.
   state0Image = loadImage("texas.png");
@@ -180,7 +184,7 @@ void setup() {
   stateImageArray[21] = state21Image;
 
   // Arnav Sanghi, calling method in set-up (25/03/24)
-  planess = new planeTest (planeImag);
+  planess = new planeTest (planeImag, planeImag1, planeImag2);
   projectFile = new Project(testImag);
   for (int i = 0; i < imagesForMap.length; i++) {
     imagesForMap[i] = loadImage("img" + i + ".png");
