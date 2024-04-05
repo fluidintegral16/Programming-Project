@@ -1,3 +1,4 @@
+// keyboard input code, to be incorporated into homepage code to lead to user query table - Habiba 7pm 05/04
 String myText = "type search";
 boolean endType;
 void setup() {
