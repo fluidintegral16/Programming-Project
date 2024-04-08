@@ -1,4 +1,7 @@
-/*final int MAPHEIGHT = 800;
+// Arnav Sanghi, create a class that is in control of the userInteraction with the map of moving around and the zoomIn and zoomOut
+// allowing the user to have full control with arrow keys and making it more intuitive (23/03/24)
+
+final int MAPHEIGHT = 800;
 final int MAPWIDTH = 1400;
  
 class testImage {
@@ -8,7 +11,8 @@ class testImage {
   int direction;
   
   PImage myImage;
-  PImage[] myImages = new PImage[21];
+  PImage[] myImages = new PImage[Pictures];
+  PImage sampleit;
   
   float scale;
   float xPan;
@@ -21,13 +25,15 @@ class testImage {
   boolean panRight;
   
 
-  testImage(int xpos, int ypos, PImage[] userImage){
+  testImage(int xpos, int ypos, PImage[] userImages, PImage userImage){
+  //testImage(int xpos, int ypos, PImage userImage){
     x = xpos;
     y = ypos;
-    myImages = userImage;
+    myImages = userImages;
+    myImage = userImage;
     scale = 0.9;
-    xPan = 600;
-    yPan = 350;
+    xPan = 700;
+    yPan = 400;
     zoomIn = false;
     zoomOut = false;
     panUp = false;
@@ -37,13 +43,23 @@ class testImage {
     
  }
  
-  void draw(){
+  void draw(PImage userImage){
+      
+        sampleit = userImage;
         translate(width/2, height/2);
         scale(scale);
         translate(-xPan, -yPan);
-        for (int i = 0; i < imagesForMap.length; i++){
-          image(myImages[i], x, y, MAPWIDTH, MAPHEIGHT);
+        
+        
+        if(currentImageNumber == 0){
+          image(myImage, x, y, MAPWIDTH, MAPHEIGHT);
         }
+        else{
+          //image(myImages[currentImageNumber], x, y, MAPWIDTH, MAPHEIGHT);
+          image(sampleit, x, y, MAPWIDTH, MAPHEIGHT);
+        }
+        
+        
         
         if (zoomIn){
            scale *= 1.04;
@@ -55,29 +71,29 @@ class testImage {
              scale = 0.8;
         }
         if (panUp){
-          if(yPan > 200)
-            yPan -= 5;
+          if(yPan > 300)
+            yPan -= 10;
           else
-            yPan = 200;
+            yPan = 300;
         }
         if (panDown){
           if(yPan < 500)
-            yPan += 5;
+            yPan += 10;
           else
             yPan = 500;
         }
         if (panLeft){
-          if(xPan > 400)
-            xPan -= 5;
+          if(xPan > 600)
+            xPan -= 10;
           else
-            xPan = 400;
+            xPan = 600;
         }
         if (panRight){
-           if(xPan < 900)
-            xPan += 5;
+           if(xPan < 800)
+            xPan += 10;
           else
-            xPan = 900;
+            xPan = 800;
         }
   }
 
-}*/
+}

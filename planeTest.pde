@@ -31,10 +31,10 @@ class planeTest{
       i=-100;
       ypos = random(100, 800);
     }
-    image(myImage, j, k, imageWidth, imageHeight);
+    image(myImage2, j, k, imageWidth, imageHeight);
     k = j;
     if((j+=5)>=1299) j=-200; 
-    image(myImage2, t, h, imageWidth, imageHeight);
+    image(myImage, t, h, imageWidth, imageHeight);
     t = -h + 1250;
     if((h-=6)<-200) h = 1250;
 

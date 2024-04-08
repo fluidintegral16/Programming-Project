@@ -3,7 +3,7 @@ class TextInput {
   String label;
   int labelX, labelY;
   String text = "";
-  boolean active = false;
+  
   
   TextInput(int x, int y) {
     this.x = x;
@@ -32,18 +32,17 @@ class TextInput {
     text(text, x + 10, y + 15);
   }
   
-  void setActive(boolean active) {
-    this.active = active;
-  }
   
-  void keyPressed(char key) {
-    if(active) {
-      if(key == BACKSPACE && text.length() > 0) {
-        text = text.substring(0, text.length() -1);
-      }
-      else if(key != BACKSPACE) {
-        text += key;
-      }
+ boolean mousePressed(float mX, float mY)
+  {
+    if (mousePressed && mX > x && mX < x + 200 && mY > y
+    && mY < y + 20)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
     }
   }
   
