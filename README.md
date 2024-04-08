@@ -3,4 +3,5 @@ Habiba El Bastawisy
 Benjamin Howard
 Niharika Shanbhag
 Arnav Sanghi
-Siddhi Srivastav
+Siddhi Srivastav 
+Krish Sood
