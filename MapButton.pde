@@ -38,8 +38,7 @@ class MapButton {
     rect(x, y, w, h);
   }
   
-  boolean isHovering(float mx, float my) 
-  {
+  boolean isHovering(float mx, float my) {
     return mx > x && mx < x + w && my > y && my < y + h;
   }
 }
