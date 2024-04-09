@@ -342,10 +342,10 @@ void draw()
         init_query_table(rowNums);
         //numberOfPages = 0;
         tempArray = new int[rowNums.length];
-        //flipPage = false;
-        //endReached = false;
-        //nextPage = false;
-        //drawPage = false;
+        flipPage = false;
+        endReached = false;
+        nextPage = false;
+        drawPage = false;
       }      
       //screen1 = false;
       //screen2 = true;
@@ -354,10 +354,10 @@ void draw()
       //draw_query_table(rowNums);
       //numberOfPages = 0;
       //tempArray = new int[rowNums.length];
-      //flipPage = false;
-      //endReached = false;
-      //nextPage = false;
-      //drawPage = false;
+      flipPage = false;
+      endReached = false;
+      nextPage = false;
+      drawPage = false;
     } //else if (buttonResult == 1)// make a button to get to the map page and have it return 1
     //{
     //  screen1 = false;
