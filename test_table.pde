@@ -122,8 +122,6 @@ PImage state21Image; //
 
 PImage[] stateImageArray = new PImage[22];
 
-boolean isEmpty;
-
 PieChart drawPieChart;
 
 
@@ -312,62 +310,27 @@ void draw()
     }
     if (buttonResult == 0)
     {
-      for(int i = 1; i <= 4; i++) {
-        if(userInput[i].equals("")) {
-          isEmpty = true;
-        }
-        else {
-          isEmpty = false;
-        }
-      }
-      if(isEmpty) {
-        rowNums = new int[100];
-        for(int i = 0; i < rowNums.length; i++) {
-          rowNums[i] = (int)random(0, 50000);  // dummy array to be replaced with array of row numbers - Habiba (4pm, 25/03) - updated to the actual array, still needs the info from nikki - Ben (5:30 30/03)
-        }
-        screen1 = false;
-        screen2 = true;
-        init_query_table(rowNums);
-        //numberOfPages = 0;
-        tempArray = new int[rowNums.length];
-        //flipPage = false;
-        //endReached = false;
-        //nextPage = false;
-        //drawPage = false;
-      }
-      else {
-        rowNums = returnFlights(Integer.parseInt(userInput[1]), Integer.parseInt(userInput[2]), userInput[3], userInput[4], "");  // dummy array to be replaced with array of row numbers - Habiba (4pm, 25/03) - updated to the actual array, still needs the info from nikki - Ben (5:30 30/03)
-        screen1 = false;
-        screen2 = true;
-        init_query_table(rowNums);
-        //numberOfPages = 0;
-        tempArray = new int[rowNums.length];
-        flipPage = false;
-        endReached = false;
-        nextPage = false;
-        drawPage = false;
-      }      
-      //screen1 = false;
-      //screen2 = true;
-       // dummy array to be replaced with array of row numbers - Habiba (4pm, 25/03) - updated to the actual array, still needs the info from nikki - Ben (5:30 30/03)
-      //init_query_table(rowNums);
-      //draw_query_table(rowNums);
-      //numberOfPages = 0;
-      //tempArray = new int[rowNums.length];
+      screen1 = false;
+      screen2 = true;
+      rowNums = returnFlights(1, 10, "LAX", "AUS", ""); // dummy array to be replaced with array of row numbers - Habiba (4pm, 25/03) - updated to the actual array, still needs the info from nikki - Ben (5:30 30/03)
+      init_query_table(rowNums);
+      draw_query_table(rowNums);
+      numberOfPages = 0;
+      tempArray = new int[rowNums.length];
       flipPage = false;
       endReached = false;
       nextPage = false;
       drawPage = false;
-    } //else if (buttonResult == 1)// make a button to get to the map page and have it return 1
-    //{
-    //  screen1 = false;
-    //  screen3 = true;
-    //}
+    } else if (buttonResult == 1)// make a button to get to the map page and have it return 1
+    {
+      screen1 = false;
+      screen3 = true;
+    }
   }
 
   if (screen2)
   {
-    mousePressed(mouseX, mouseY);
+    mousePressed(mouseX, mouseY); //Habiba's??? - how work
     if (nextPage || flipPage|| backPage) {
       init_query_table(tempArray);
       flipPage = false;
@@ -386,6 +349,7 @@ void draw()
     testss.draw(sample);
     maps.draw(); //Selecty Map that highlights
     stateSelect = maps.mousePressed();
+    stateSelect = whatImageSwitch(stateSelect);
     planess.draw(); //Moving Planes
     if (stateSelect != -1)
     {
