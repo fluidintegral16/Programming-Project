@@ -386,6 +386,7 @@ void draw()
     testss.draw(sample);
     maps.draw(); //Selecty Map that highlights
     stateSelect = maps.mousePressed();
+    stateSelect = whatImageSwitch(stateSelect);
     planess.draw(); //Moving Planes
     if (stateSelect != -1)
     {
