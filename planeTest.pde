@@ -1,4 +1,5 @@
-// Arnav Sanghi - create a class that has planes moving accross the screen to give a visual element of actual planes flying (20/03/24)
+// Arnav Sanghi - create a class that has planes moving accross the screen to give a visual element of actual planes flying 
+// contains 3 planes, each moving in 3 separate directions with the aim of covering majority of the country (20/03/24)
 
 class planeTest{
   int i;
