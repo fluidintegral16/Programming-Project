@@ -75,7 +75,7 @@ int inputSpacing;
 int labelX;
 int labelY;
 
-// ALL THE ARRAYS WITH THE WAC'S FOR THE MAP  --- USED AS INPUT FOR THE returnAirportsInArea FUNCTION
+// Ben - ALL THE ARRAYS WITH THE WAC'S FOR THE MAP  --- USED AS INPUT FOR THE returnAirportsInArea FUNCTION
 int stateSelect = 0;
 int[] wacGrouping0 = { 74 };
 PImage state0Image; // TEXAS
@@ -157,7 +157,7 @@ void setup() {
   planeImag1 = loadImage("plane1.png");
   planeImag2 = loadImage("plane2.png");
 
-  // SO. MANY. IMAGES.
+  // Ben - assignment of images to the corresponding index value of the state
   state0Image = loadImage("texas.png");
   stateImageArray[0] = state0Image;
   state1Image = loadImage("alaska.png");
@@ -273,6 +273,7 @@ void draw()
 
   sample = imagesForMap[currentImageNumber];
 
+  // Ben - preliminary screen switching (pages 3 -> 4 and 4 -> 5) and layout. later improved and expanded upon by Nikki
 
   if (screen1) // Habiba + Siddhi - adding user text input feature 7/4/24
   {
