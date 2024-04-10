@@ -122,7 +122,7 @@ PImage state21Image; //
 
 PImage[] stateImageArray = new PImage[22];
 
-boolean isEmpty;
+boolean isEmpty, firstPage;
 
 PieChart drawPieChart;
 
@@ -218,6 +218,7 @@ void setup() {
   nextPage = false;
   drawPage = false;
   backPage = false;
+  firstPage = true;
   nationalData = gatherDisplayableData();
   drawPieChart = new PieChart();
 
@@ -464,7 +465,10 @@ void draw_query_table(int [] rowNums)
           flipPage = true;
           nextPage = false;
         }
-        queryLines[i].mousePressed(mouseY);
+        if (!firstPage){
+          queryLines[i].mousePressed(mouseY); // fixes highlighting bug - habiba 10/04
+        }
+        firstPage = false;
         queryLines[i].draw();
       }
     }
