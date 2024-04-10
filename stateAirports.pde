@@ -5,6 +5,10 @@
 class stateAirports{
   int x;
   int y;
+  int buttonWidth = 100;
+  int buttonHeight = 30;
+  int margin = 10;
+  Button goBackButton;
 
 
   PImage myImage;
@@ -30,7 +34,8 @@ class stateAirports{
     
     airportsToDisplay = sampleAirports;
     totalAirports = airportsToDisplay.length; 
-        
+    
+    goBackButton = new Button("Go Back", margin, height - buttonHeight - margin, buttonWidth, buttonHeight);
 
   }
   
@@ -62,6 +67,7 @@ class stateAirports{
         text( airportsToDisplay[counter], boxX + shiftX + rectWidth / 2, boxY + shiftY + rectHeight / 2);
 
     }
+    goBackButton.display();
     
   }
   
@@ -88,4 +94,10 @@ class stateAirports{
     return -1;
   }
   
+  void mouseClicked() {
+    if(goBackButton.isHovering(mouseX, mouseY)) {
+      screen4 = false;
+      screen3 = true;
+    }
+  }
 }

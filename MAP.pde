@@ -5,6 +5,10 @@ class Map {
   PImage currentImage;
   PImage[] images = new PImage[Pictures];
   PImage mainImage;
+  int buttonWidth = 100;
+  int buttonHeight = 30;
+  int margin1 = 5;
+  Button goBackButton;
   //testImage testimages;
   Map(PImage main, PImage[] imagesForMap) {
     //testimages = new testImage(0, 0, imagesForMap);
@@ -182,6 +186,8 @@ class Map {
     buttons[40].setY(445);
     buttons[40].setWidth(40); 
     buttons[40].setHeight(45);
+    
+    goBackButton = new Button("Go back", margin1, height - buttonHeight - margin1, buttonWidth, buttonHeight);
   }
 
   void draw() {
@@ -199,12 +205,30 @@ class Map {
     if (currentImage != null) {
       image(currentImage, 0, 0, 1400, 800);
     }
+    goBackButton.display();
   }
 
 
   int mousePressed()
   {
-    for (MapButton b : buttons)
+    //for (MapButton b : buttons)
+    //{
+    //  if (mousePressed)
+    //  {
+    //    if (b.isHovering(mouseX, mouseY))
+    //    {
+    //      return b.id;
+    //    }
+    //  }
+    //}
+    if(goBackButton.isHovering(mouseX, mouseY) && mousePressed) {
+      if(screen3) {
+        screen3 = false;
+        screen1 = true;
+      }
+      return 0;
+    }
+        for (MapButton b : buttons)
     {
       if (mousePressed)
       {
@@ -216,4 +240,7 @@ class Map {
     }
     return -1;
   }
+    
+
+  
 }

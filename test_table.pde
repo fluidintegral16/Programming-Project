@@ -222,11 +222,11 @@ void setup() {
   drawPieChart = new PieChart();
 
 // Habiba + Siddhi + Niharika - variable setups for boxes and their labels
-    inputX = 700;
-    inputY = 100;
+    inputX = 750;
+    inputY = 250;
     inputSpacing = 60;
-    labelX = 580;
-    labelY = 110;
+    labelX = 530;
+    labelY = 260;
     startType = false;
     endType = false;
     
@@ -241,21 +241,20 @@ void setup() {
     yValues[0] = 0;
     
     
-    
     fromTextInput = new TextInput(inputX, inputY);
-    fromTextInput.setLabel("From Date:");
+    fromTextInput.setLabel("From Date (eg: 10): ");
     fromTextInput.setLabelPosition(labelX, labelY);
   
     toTextInput = new TextInput(inputX, inputY + inputSpacing);
-    toTextInput.setLabel("To Date:");
+    toTextInput.setLabel("To Date (eg: 10): ");
     toTextInput.setLabelPosition(labelX, labelY + inputSpacing);
   
     fromAirportInput = new TextInput(inputX, inputY + 2 * inputSpacing);
-    fromAirportInput.setLabel("From Airport:");
+    fromAirportInput.setLabel("From Airport (eg: LAX): ");
     fromAirportInput.setLabelPosition(labelX, labelY + 2 * inputSpacing);
   
     toAirportInput = new TextInput(inputX, inputY + 3 * inputSpacing);
-    toAirportInput.setLabel("To Airport:");
+    toAirportInput.setLabel("To Airport (eg: LAX): ");
     toAirportInput.setLabelPosition(labelX, labelY + 3 * inputSpacing);
 
 }
@@ -310,6 +309,9 @@ void draw()
         text(userInput[i], inputX + 5, yValues[i]);
       }
     }
+    
+    // Niharika Shanbhag, created all the conditional statements to switch between screens 8pm (09/04/24)
+    
     if (buttonResult == 0)
     {
       for(int i = 1; i <= 4; i++) {
@@ -328,45 +330,21 @@ void draw()
         screen1 = false;
         screen2 = true;
         init_query_table(rowNums);
-        //numberOfPages = 0;
         tempArray = new int[rowNums.length];
-        //flipPage = false;
-        //endReached = false;
-        //nextPage = false;
-        //drawPage = false;
       }
       else {
         rowNums = returnFlights(Integer.parseInt(userInput[1]), Integer.parseInt(userInput[2]), userInput[3], userInput[4], "");  // dummy array to be replaced with array of row numbers - Habiba (4pm, 25/03) - updated to the actual array, still needs the info from nikki - Ben (5:30 30/03)
         screen1 = false;
         screen2 = true;
         init_query_table(rowNums);
-        //numberOfPages = 0;
         tempArray = new int[rowNums.length];
-        flipPage = false;
-        endReached = false;
-        nextPage = false;
-        drawPage = false;
-      }      
-      //screen1 = false;
-      //screen2 = true;
-       // dummy array to be replaced with array of row numbers - Habiba (4pm, 25/03) - updated to the actual array, still needs the info from nikki - Ben (5:30 30/03)
-      //init_query_table(rowNums);
-      //draw_query_table(rowNums);
-      //numberOfPages = 0;
-      //tempArray = new int[rowNums.length];
-      flipPage = false;
-      endReached = false;
-      nextPage = false;
-      drawPage = false;
-    } //else if (buttonResult == 1)// make a button to get to the map page and have it return 1
-    //{
-    //  screen1 = false;
-    //  screen3 = true;
-    //}
+      }
+    }
   }
 
   if (screen2)
   {
+    int buttonResult = testAccess.mousePressed();
     mousePressed(mouseX, mouseY);
     if (nextPage || flipPage|| backPage) {
       init_query_table(tempArray);
@@ -378,6 +356,10 @@ void draw()
     } else {
       draw_query_table(rowNums);
     }
+    if(buttonResult == 0) {
+      screen2 = false;
+      screen1 = true;
+    }
   }
 
   if (screen3)
@@ -388,13 +370,29 @@ void draw()
     stateSelect = maps.mousePressed();
     stateSelect = whatImageSwitch(stateSelect);
     planess.draw(); //Moving Planes
-    if (stateSelect != -1)
+    if (stateSelect != 1)
     {
       screen3 = false;
       screen4 = true;
       airportsInZone = switchFunction(stateSelect); // returns the airports in the state for arnav's function
       stateAirport = new stateAirports(stateImageArray[stateSelect], airportsInZone);
     }
+    else {
+      if(screen3) {
+        screen3 = false;
+        screen1 = true;
+      }
+    }
+    //if(stateSelect != -1) {
+    //  screen3 = false;
+    //  screen1 = true;
+    //}
+    //else {
+    //  screen3 = false;
+    //  screen4 = true;
+    //  airportsInZone = switchFunction(stateSelect); // returns the airports in the state for arnav's function
+    //  stateAirport = new stateAirports(stateImageArray[stateSelect], airportsInZone);
+    //}
   }
 
 
@@ -413,8 +411,13 @@ void draw()
 
   if (screen5)
   {
+    int buttonResult = drawPieChart.mousePressed();
     background(255);
     drawPieChart.draw();
+    if(buttonResult == 0) {
+      screen5 = false;
+      screen4 = true;
+    }
   }
 }
 
