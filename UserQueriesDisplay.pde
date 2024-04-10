@@ -99,7 +99,7 @@ class UserQueriesDisplay //
  // highlighting feature - habiba (2pm, 28/03)
   void mousePressed(float mY){
     if (mousePressed && mY > SEPARATING_LINE_Y_COORD+(DOWN_GAP*(queryResultNum))+2 && mY < SEPARATING_LINE_Y_COORD+(DOWN_GAP*(queryResultNum))+textDescent()+DOWN_GAP-1 
-      && queryResultNum<35){
+      && queryResultNum<35 && queryResultNum!=18 && queryResultNum!=19){
       hovering = true;
     }
     else hovering = false;
