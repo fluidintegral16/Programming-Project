@@ -508,7 +508,7 @@ void backPage() {
   endReached = false;
 }
 
-// Arnav Sanghi, adding a keyPressed method (23/03/24)
+// Arnav Sanghi, adding a keyPressed method to recognize user input and say what steps to continue next (23/03/24)
 
 void keyPressed()
 {
@@ -609,7 +609,7 @@ void keyPressed()
   }
 }
 
-// Arnav Sanghi, adding a keyReleased method (23/03/24)
+// Arnav Sanghi, adding a keyReleased method to recognize when user releases input (23/03/24)
 
 void keyReleased()
 {
