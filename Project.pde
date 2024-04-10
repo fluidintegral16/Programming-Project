@@ -26,7 +26,7 @@ class Project{
     text("STAR SPANGLED TRAVELS", 530, 50);
     
     textSize(18);
-    text("Click on the textbox, enter the detail, and click enter", 530, 200);
+    text("Click on the textbox, enter the details, and click enter", 530, 200);
     
 
     searchButton.display();
