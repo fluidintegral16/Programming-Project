@@ -1,5 +1,5 @@
 
-int[] gatherDisplayableData() // Ben  function to gather the universal data to display and compare
+int[] gatherDisplayableData() // Ben - function to gather the universal data to display and compare
 {
   // -Ben   Creates a list of all the airports by area code
   for (int i = 0; i < DataPoints.length; i++)
@@ -105,7 +105,7 @@ int[] gatherDisplayableData() // Ben  function to gather the universal data to d
   return nationalDataArray;
 }
 
-
+// Ben - returns only the flights that fit the parameters put into the search bar on screen1
 int[] returnFlights(int fromDate, int toDate, String originAirportCode, String destinationAirportCode, String lateness) // uses nikkis parameters to return only the airports that fit
 {
   ArrayList<Integer> masterList = new ArrayList<Integer>();
@@ -128,7 +128,7 @@ int[] returnFlights(int fromDate, int toDate, String originAirportCode, String d
 
 
 
-
+// Ben - returns the airports in the state zone selected to be used on the buttons for selecting the airports
 String[] returnAirportsInArea(int[] whatZone) // returns the airports in the zones
 {
   ArrayList<String> airportsInArea = new ArrayList<String>();
@@ -163,7 +163,7 @@ String[] returnAirportsInArea(int[] whatZone) // returns the airports in the zon
   return allAirports;
 }
 
-
+//  Ben - returns the airports specific to what area is selected
 String[] switchFunction(int stateSelect)
 {
   switch(stateSelect)
@@ -254,6 +254,7 @@ String[] switchFunction(int stateSelect)
   return airportsInZone;
 }
 
+// Ben - makes the seperate buttons that lead to the same output link
 int whatImageSwitch(int number)
 {
   switch(number)
@@ -344,6 +345,7 @@ int whatImageSwitch(int number)
   return -1;
 }
 
+// Ben - gathers the angles to use in the pie chart on screen5
 float[] gatherData(String airport) // for pie chart
 {
   int outAppearances = 0;
