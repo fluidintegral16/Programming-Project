@@ -11,6 +11,7 @@ ArrayList<Integer> cancellationsIn;
 ArrayList<Integer> lateDepartures;
 ArrayList<Integer> lateArrivals;
 int[] nationalData;
+int[] dataForBarChart;
 
 UserQueriesDisplay queryLines[];
 UserQueriesDisplay testAccess; // dummy instance used to access UserDisplayQueries attributes - Habiba 3pm, (02/04)
@@ -51,6 +52,7 @@ boolean screen2 = false;
 boolean screen3 = false;
 boolean screen4 = false;
 boolean screen5 = false;
+boolean screen6 = false;
 
 TextInput fromTextInput;
 TextInput toTextInput;
@@ -125,6 +127,7 @@ PImage[] stateImageArray = new PImage[22];
 boolean isEmpty;
 
 PieChart drawPieChart;
+BarChart drawBarChart;
 
 
 void setup() {
@@ -219,7 +222,9 @@ void setup() {
   drawPage = false;
   backPage = false;
   nationalData = gatherDisplayableData();
+  
   drawPieChart = new PieChart();
+  drawBarChart = new BarChart();
 
 // Habiba + Siddhi + Niharika - variable setups for boxes and their labels
     inputX = 700;
@@ -408,6 +413,9 @@ void draw()
       screen4 = false;
       screen5 = true;
       drawPieChart.setup(airportsInZone[airportSelected], nationalData);
+      dataForBarChart = gatherBarChartData(airportsInZone[airportSelected]);
+      drawBarChart.setupBarChart(airportsInZone[airportSelected]);
+      
     }
   }
 
@@ -415,6 +423,12 @@ void draw()
   {
     background(255);
     drawPieChart.draw();
+  }
+  
+  if(screen6) {
+    background(255);
+    drawBarChart.drawBarChart(100, dataForBarChart);
+    drawBarChart.drawBarChart(975, nationalData);
   }
 }
 
