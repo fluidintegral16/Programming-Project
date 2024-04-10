@@ -381,20 +381,10 @@ void draw()
       airportsInZone = switchFunction(stateSelect); // returns the airports in the state for arnav's function
       stateAirport = new stateAirports(stateImageArray[stateSelect], airportsInZone);
     }
-    else if(stateSelect == 0) {
-      screen3 = false;
-      screen1 = true;
+    else {
+      //screen3 = false;
+      //screen1 = true;
     }
-    //if(stateSelect != -1) {
-    //  screen3 = false;
-    //  screen1 = true;
-    //}
-    //else {
-    //  screen3 = false;
-    //  screen4 = true;
-    //  airportsInZone = switchFunction(stateSelect); // returns the airports in the state for arnav's function
-    //  stateAirport = new stateAirports(stateImageArray[stateSelect], airportsInZone);
-    //}
   }
 
 
@@ -417,8 +407,8 @@ void draw()
     background(255);
     drawPieChart.draw();
     if(buttonResult == 0) {
-      screen5 = false;
-      screen4 = true;
+      //screen5 = false;
+      //screen4 = true;
     }
   }
 }

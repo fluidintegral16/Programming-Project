@@ -32,7 +32,7 @@ class PieChart
     onTimeAngleIn = pieChartData[3];
     delayedAngleIn = pieChartData[4];
     cancelledAngleIn = pieChartData[5];
-    goBackButton = new Button("Go Back", margin, height - buttonHeight - margin, buttonWidth, buttonHeight);
+    goBackButton = new Button("Go Back", margin, height - buttonHeight - margin - 30, buttonWidth, buttonHeight);
   }
 
 
@@ -79,10 +79,12 @@ class PieChart
   }
   
   int mousePressed() {
-    if(goBackButton.isHovering(mouseX, mouseY) && mousePressed) {
-      if (screen5) {
-        screen5 = false;
-        screen4 = true;
+    if(goBackButton.isHovering(mouseX, mouseY)) {
+      if(mousePressed){
+        //if (screen5) {
+          screen5 = false;
+          screen4 = true;
+        //}
       }
       return 0;
     }

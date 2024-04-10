@@ -34,27 +34,29 @@ class Project{
     fill(0);
     textSize(20);
     textAlign(CENTER);
-    text("To check statistics of flights, ", 630, 650);
+    text("To check statistics of flights, ", 630, 750);
     clickHereButton.setX(750);
-    clickHereButton.setY(625);
+    clickHereButton.setY(730);
   }
   
   int mousePressed() {
-    if(searchButton.isHovering(mouseX, mouseY) && mousePressed) {
-      if(screen1) {
-        screen1 = false;
-        screen2 = true;
+    if(searchButton.isHovering(mouseX, mouseY)) {
+      if (mousePressed){
+        if(screen1) {
+          screen1 = false;
+          screen2 = true;
+        }
       }
       return 0;
     }
-    if(clickHereButton.isHovering(mouseX, mouseY) && mousePressed) {
-      if(mousePressed) {
+    if(clickHereButton.isHovering(mouseX, mouseY)) {
+      if (mousePressed){
         if(screen1) {
           screen1 = false;
           screen3 = true;
+
         }
       }
-      return 1;
     }
     return -1;
     

@@ -1,4 +1,4 @@
-// Arnav Sanghi, create a class which contains the airports for the state clicked on the map screen, 
+// Arnav Sanghi, create a class which contains the airports for the state clicked on the map screen,  //<>//
 // depending on the state clicked, it will return boxes with the number of airports present there,
 // this screen acts as a transition from the main map, to visual data for each airport (27/03/24)
 
@@ -39,7 +39,7 @@ class stateAirports{
 
   }
   
-  void draw () { //<>//
+  void draw () {
    tint(255, opacity);
    image(myImage, 325, 50, 700, 700);
    noTint(); 
@@ -76,32 +76,36 @@ class stateAirports{
   }
   
   
-  int mousePressed(){
+ int mousePressed(){
     if(goBackButton.isHovering(mouseX, mouseY)) {
-      if(mousePressed) {
-        screen3 = true;
-        screen4 = false;
-        //screen2 = false;
-        //screen1 = false;
-        //screen5 = false;
+      if (mousePressed){
+        if(screen4){
+          screen3 = false;
+          screen4 = false;
+          screen2 = false;
+          screen1 = true;
+          screen5 = false;
+        }
       }
     }
-    else {
+    else{
       for (int counter = 0; counter < totalAirports; counter++) {
-          int rowIndex = counter / maxRectPerRow; // Calculate the row index
-          int colIndex = counter % maxRectPerRow; // Calculate the column index
-          int shiftX = colIndex * (rectWidth + rectSpacing);
-          int shiftY = rowIndex * (rectHeight + rectSpacing);
-      
-          if (isMouseOverRectangle(boxX + shiftX, boxY + shiftY, rectWidth, rectHeight)){
-            if (mousePressed){
-              println(counter);
-              return counter;
-            }
+        int rowIndex = counter / maxRectPerRow; // Calculate the row index
+        int colIndex = counter % maxRectPerRow; // Calculate the column index
+        int shiftX = colIndex * (rectWidth + rectSpacing);
+        int shiftY = rowIndex * (rectHeight + rectSpacing);
+    
+        if (isMouseOverRectangle(boxX + shiftX, boxY + shiftY, rectWidth, rectHeight)){
+          if (mousePressed){
+            println(counter);
+            return counter;
           }
-      
+        }
+    
       }
     }
     return -1;
   }
+  
+
 }
