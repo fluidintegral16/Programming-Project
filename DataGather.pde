@@ -1,5 +1,5 @@
 
-int[] gatherDisplayableData() // Ben - function to gather the universal data to display and compare
+float[] gatherDisplayableData() // Ben  function to gather the universal data to display and compare
 {
   // -Ben   Creates a list of all the airports by area code
   for (int i = 0; i < DataPoints.length; i++)
@@ -88,6 +88,7 @@ int[] gatherDisplayableData() // Ben - function to gather the universal data to 
     double percentOnTimeOut = 100-percentLateOut-percentCancelledOut;
     println(airports.get(i) + " : " + flightsOut.get(i) + " : " + lateDepartures.get(i) + " : " + cancellationsOut.get(i) +
       " : " + percentOnTimeOut + "%, " + percentLateOut + "%, " + percentCancelledOut + "% --- " + flightsIn.get(i) + " : " + lateArrivals.get(i) + " : " + cancellationsIn.get(i));
+      
   }
 
 
@@ -100,12 +101,18 @@ int[] gatherDisplayableData() // Ben - function to gather the universal data to 
     nationalLates += lateDepartures.get(i);
     nationalCancels += cancellationsOut.get(i);
   }
-  println("National Totals of Flights Out: " + nationalFlights + " : " + nationalLates + " : " + nationalCancels);
-  int[] nationalDataArray = { nationalFlights, nationalLates, nationalCancels };
+  
+  // Siddhi - getting percentages for the national data 10/4/24 @ 2pm
+  float percentLateNationally = (float(nationalLates) / float(nationalFlights)) * 100;
+  float percentCancelledNationally = (float(nationalCancels) / float(nationalFlights)) * 100;
+  float percentOnTimeNationally = 100 - percentLateNationally - percentCancelledNationally;
+  println("National Totals of Flights Out: " + percentOnTimeNationally + " : " + percentLateNationally + " : " + percentCancelledNationally);
+  float[] nationalDataArray = { percentCancelledNationally, percentLateNationally, percentOnTimeNationally};
+  // cancelled, late, ontime
   return nationalDataArray;
 }
 
-// Ben - returns only the flights that fit the parameters put into the search bar on screen1
+
 int[] returnFlights(int fromDate, int toDate, String originAirportCode, String destinationAirportCode, String lateness) // uses nikkis parameters to return only the airports that fit
 {
   ArrayList<Integer> masterList = new ArrayList<Integer>();
@@ -128,7 +135,7 @@ int[] returnFlights(int fromDate, int toDate, String originAirportCode, String d
 
 
 
-// Ben - returns the airports in the state zone selected to be used on the buttons for selecting the airports
+
 String[] returnAirportsInArea(int[] whatZone) // returns the airports in the zones
 {
   ArrayList<String> airportsInArea = new ArrayList<String>();
@@ -163,7 +170,7 @@ String[] returnAirportsInArea(int[] whatZone) // returns the airports in the zon
   return allAirports;
 }
 
-//  Ben - returns the airports specific to what area is selected
+
 String[] switchFunction(int stateSelect)
 {
   switch(stateSelect)
@@ -254,7 +261,6 @@ String[] switchFunction(int stateSelect)
   return airportsInZone;
 }
 
-// Ben - makes the seperate buttons that lead to the same output link
 int whatImageSwitch(int number)
 {
   switch(number)
@@ -345,7 +351,6 @@ int whatImageSwitch(int number)
   return -1;
 }
 
-// Ben - gathers the angles to use in the pie chart on screen5
 float[] gatherData(String airport) // for pie chart
 {
   int outAppearances = 0;
@@ -411,4 +416,59 @@ float[] gatherData(String airport) // for pie chart
   float radians[] = {onTimeAngleOut, lateAngleOut, cancelledAngleOut, onTimeAngleIn, lateAngleIn, cancelledAngleIn, outAppearances, outLates, outCancels, inAppearances, inLates, inCancels};
 
   return radians;
+}
+
+float[] gatherBarChartData(String airport)
+{
+  int outAppearances = 0;
+  int outCancels = 0;
+  int outLates = 0;
+  int inAppearances = 0;
+  int inCancels = 0;
+  int inLates = 0;
+  String currentAirport = airport;
+  for (int j = 0; j < DataPoints.length; j++)
+  {
+    String comparingAirport = DataPoints[j].origin();
+    if (currentAirport.equals(comparingAirport))
+    {
+      outAppearances++;
+      if (DataPoints[j].cancelled()==1)
+      {
+        outCancels++;
+      }
+      if (DataPoints[j].crsDepTime() < DataPoints[j].depTime())
+      {
+        outLates++;
+      }
+    }
+    comparingAirport = DataPoints[j].dest();
+    if (currentAirport.equals(comparingAirport))
+    {
+      inAppearances++;
+      if (DataPoints[j].cancelled()==1)
+      {
+        inCancels++;
+      }
+      if (DataPoints[j].crsDepTime() < DataPoints[j].depTime())
+      {
+        inLates++;
+      }
+    }
+  }
+  
+  
+  
+  float percentCancelledOut = float(outCancels)/float(outAppearances)*100;
+  float percentLateOut = float(outLates)/float(outAppearances)*100;
+  float percentOnTimeOut = 100-percentLateOut-percentCancelledOut;
+  
+  
+  float[] dataForBarChart = new float[3];
+  // cancelled, late, ontime
+  dataForBarChart[0] = percentCancelledOut;
+  dataForBarChart[1] = percentLateOut;
+  dataForBarChart[2] = percentOnTimeOut;
+  
+  return dataForBarChart;
 }

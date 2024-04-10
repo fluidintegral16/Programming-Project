@@ -1,4 +1,3 @@
-
 class MapButton {
   int x, y, w, h, id;
   

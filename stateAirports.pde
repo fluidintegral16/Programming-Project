@@ -5,6 +5,13 @@
 class stateAirports{
   int x;
   int y;
+  
+  // Niharika Shanbhag - created the "Go Back" button 3pm (04/04/24) 
+  
+  int buttonWidth = 100;
+  int buttonHeight = 30;
+  int margin = 10;
+  Button goBackButton;
 
 
   PImage myImage;
@@ -30,11 +37,11 @@ class stateAirports{
     
     airportsToDisplay = sampleAirports;
     totalAirports = airportsToDisplay.length; 
-        
+    goBackButton = new Button("Go Back", margin, height - buttonHeight - margin, buttonWidth, buttonHeight);
 
   }
   
-  void draw () { //<>//
+  void draw () { //<>// //<>//
    tint(255, opacity);
    image(myImage, 325, 50, 700, 700);
    noTint(); 
@@ -62,6 +69,7 @@ class stateAirports{
         text( airportsToDisplay[counter], boxX + shiftX + rectWidth / 2, boxY + shiftY + rectHeight / 2);
 
     }
+    goBackButton.display();
     
   }
   
@@ -69,9 +77,22 @@ class stateAirports{
     return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
   }
   
+  // Niharika Shanbhag - created function to make the button functional 3pm (04/04/24)
   
   int mousePressed(){
-    for (int counter = 0; counter < totalAirports; counter++) {
+    if(goBackButton.isHovering(mouseX, mouseY)) {
+      if (mousePressed){
+        if(screen4){
+          screen3 = false;
+          screen4 = false;
+          screen2 = false;
+          screen1 = true;
+          screen5 = false;
+        }
+      }
+    }
+    else{
+      for (int counter = 0; counter < totalAirports; counter++) {
         int rowIndex = counter / maxRectPerRow; // Calculate the row index
         int colIndex = counter % maxRectPerRow; // Calculate the column index
         int shiftX = colIndex * (rectWidth + rectSpacing);
@@ -84,8 +105,10 @@ class stateAirports{
           }
         }
     
+      }
     }
     return -1;
+    
   }
   
 }

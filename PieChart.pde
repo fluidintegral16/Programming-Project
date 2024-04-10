@@ -16,10 +16,18 @@ class PieChart
   String airportCode = "";
   float[] pieChartData;
   int[] nationalDataArray;
-  void setup(String airport, int[] nationalData)
+  
+  // Niharika Shanbhag - created the "Go Back" button 5pm (28/03/24)
+  
+  int buttonWidth = 100;
+  int buttonHeight = 30;
+  int margin = 10;
+  Button goBackButton;
+  Button barChartButton;
+  
+  void setup(String airport)
   {
     airportCode = airport;
-    nationalDataArray = nationalData;
     pieChartData = gatherData(airport);
     onTimeAngle = pieChartData[0];
     delayedAngle = pieChartData[1];
@@ -27,6 +35,8 @@ class PieChart
     onTimeAngleIn = pieChartData[3];
     delayedAngleIn = pieChartData[4];
     cancelledAngleIn = pieChartData[5];
+    goBackButton = new Button("Go Back", margin, height - buttonHeight - margin - 30, buttonWidth, buttonHeight);
+    barChartButton = new Button("Click here", 650, 450, 100, 30);
   }
 
 
@@ -66,8 +76,32 @@ class PieChart
     fill(70, 150, 240);
     square(753, 313, 24);
     fill(0);
-    text(airportCode + " accounts for:\n" + (pieChartData[6]/float(nationalDataArray[0])*100) + "% of the national flights.\n" + (pieChartData[7]/float(nationalDataArray[1])*100) + "% of the national delays.\n" + (pieChartData[8]/float(nationalDataArray[2])*100) + "% of the national cancellations.\n", 700, 600);
+    text("To view the comparison to national data, ", 700, 430);
     textSize(70);
     text(airportCode, 700, 50);
+    goBackButton.display();
+    barChartButton.display();
   }
+  
+  // Niharika Shanbhag - created the mousePressed function to make the button functional 5pm (28/03/24)
+  
+  int mousePressed() {
+    if(goBackButton.isHovering(mouseX, mouseY)) {
+      if(mousePressed){
+        //if (screen5) {
+          screen5 = false;
+          screen4 = true;
+        //}
+      }
+      return 0;
+    }
+    if(barChartButton.isHovering(mouseX, mouseY)) {
+      if(mousePressed) {
+        screen5 = false;
+        screen6 = true;
+      }
+    }
+    return -1;
+  }
+  
 }

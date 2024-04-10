@@ -5,7 +5,7 @@ import java.util.LinkedHashMap; // added to make keySet() in order - Habiba (3pm
 class DataPoint
 {
 
-  // Arnav Sanghi, Added the instance variables for each flight object to have so that they can be stored and later be used for display, 8pm, 8/3/2024.
+  // Arnav Sanghi, Added the instance variables for each flight object to have, 8pm, 8/3/2024.
 
   int FlightDate;   /// Date
   String IATA_Code_Marketing_Airline;
