@@ -11,6 +11,7 @@ ArrayList<Integer> cancellationsIn;
 ArrayList<Integer> lateDepartures;
 ArrayList<Integer> lateArrivals;
 int[] nationalData;
+int[] dataForBarChart;
 
 UserQueriesDisplay queryLines[];
 UserQueriesDisplay testAccess; // dummy instance used to access UserDisplayQueries attributes - Habiba 3pm, (02/04)
@@ -51,6 +52,7 @@ boolean screen2 = false;
 boolean screen3 = false;
 boolean screen4 = false;
 boolean screen5 = false;
+boolean screen6 = false;
 
 TextInput fromTextInput;
 TextInput toTextInput;
@@ -125,6 +127,7 @@ PImage[] stateImageArray = new PImage[22];
 boolean isEmpty;
 
 PieChart drawPieChart;
+BarChart drawBarChart;
 
 
 void setup() {
@@ -219,14 +222,16 @@ void setup() {
   drawPage = false;
   backPage = false;
   nationalData = gatherDisplayableData();
+  
   drawPieChart = new PieChart();
+  drawBarChart = new BarChart();
 
 // Habiba + Siddhi + Niharika - variable setups for boxes and their labels
-    inputX = 700;
-    inputY = 100;
+    inputX = 750;
+    inputY = 250;
     inputSpacing = 60;
-    labelX = 580;
-    labelY = 110;
+    labelX = 530;
+    labelY = 260;
     startType = false;
     endType = false;
     
@@ -243,19 +248,19 @@ void setup() {
     
     
     fromTextInput = new TextInput(inputX, inputY);
-    fromTextInput.setLabel("From Date:");
+    fromTextInput.setLabel("From Date (eg: 10):");
     fromTextInput.setLabelPosition(labelX, labelY);
   
     toTextInput = new TextInput(inputX, inputY + inputSpacing);
-    toTextInput.setLabel("To Date:");
+    toTextInput.setLabel("To Date (eg: 10):");
     toTextInput.setLabelPosition(labelX, labelY + inputSpacing);
   
     fromAirportInput = new TextInput(inputX, inputY + 2 * inputSpacing);
-    fromAirportInput.setLabel("From Airport:");
+    fromAirportInput.setLabel("From Airport (eg: LAX):");
     fromAirportInput.setLabelPosition(labelX, labelY + 2 * inputSpacing);
   
     toAirportInput = new TextInput(inputX, inputY + 3 * inputSpacing);
-    toAirportInput.setLabel("To Airport:");
+    toAirportInput.setLabel("To Airport (eg: LAX):");
     toAirportInput.setLabelPosition(labelX, labelY + 3 * inputSpacing);
 
 }
@@ -310,6 +315,9 @@ void draw()
         text(userInput[i], inputX + 5, yValues[i]);
       }
     }
+    
+    // Niharika Shanbhag - created all the conditional statements to switch between screens 6pm (02/04/24)
+    
     if (buttonResult == 0)
     {
       for(int i = 1; i <= 4; i++) {
@@ -328,45 +336,27 @@ void draw()
         screen1 = false;
         screen2 = true;
         init_query_table(rowNums);
-        //numberOfPages = 0;
         tempArray = new int[rowNums.length];
-        //flipPage = false;
-        //endReached = false;
-        //nextPage = false;
-        //drawPage = false;
       }
       else {
         rowNums = returnFlights(Integer.parseInt(userInput[1]), Integer.parseInt(userInput[2]), userInput[3], userInput[4], "");  // dummy array to be replaced with array of row numbers - Habiba (4pm, 25/03) - updated to the actual array, still needs the info from nikki - Ben (5:30 30/03)
         screen1 = false;
         screen2 = true;
         init_query_table(rowNums);
-        //numberOfPages = 0;
         tempArray = new int[rowNums.length];
-        flipPage = false;
-        endReached = false;
-        nextPage = false;
-        drawPage = false;
       }      
-      //screen1 = false;
-      //screen2 = true;
-       // dummy array to be replaced with array of row numbers - Habiba (4pm, 25/03) - updated to the actual array, still needs the info from nikki - Ben (5:30 30/03)
-      //init_query_table(rowNums);
-      //draw_query_table(rowNums);
-      //numberOfPages = 0;
-      //tempArray = new int[rowNums.length];
-      flipPage = false;
-      endReached = false;
-      nextPage = false;
-      drawPage = false;
-    } //else if (buttonResult == 1)// make a button to get to the map page and have it return 1
-    //{
-    //  screen1 = false;
-    //  screen3 = true;
-    //}
+    }
+    else if(buttonResult == 1) {
+      screen1 = false;
+      screen3 = true;
+    }
   }
+
+  // Niharika Shanbhag - created all conditional statements to switch between screens 6pm (02/04/24)
 
   if (screen2)
   {
+    int buttonResult = testAccess.mousePressed();
     mousePressed(mouseX, mouseY);
     if (nextPage || flipPage|| backPage) {
       init_query_table(tempArray);
@@ -378,7 +368,13 @@ void draw()
     } else {
       draw_query_table(rowNums);
     }
+    if(buttonResult == 0) {
+      screen2 = false;
+      screen1 = true;
+    }
   }
+
+  // Niharika Shanbhag - created all conditional statements to switch between screens 6pm (02/04/24)
 
   if (screen3)
   {
@@ -395,8 +391,11 @@ void draw()
       airportsInZone = switchFunction(stateSelect); // returns the airports in the state for arnav's function
       stateAirport = new stateAirports(stateImageArray[stateSelect], airportsInZone);
     }
+    else {
+    }
   }
 
+  // Niharika Shanbhag - created all conditional statements to switch between screens 6pm (02/04/24)
 
   if (screen4)
   {
@@ -408,13 +407,33 @@ void draw()
       screen4 = false;
       screen5 = true;
       drawPieChart.setup(airportsInZone[airportSelected], nationalData);
+      dataForBarChart = gatherBarChartData(airportsInZone[airportSelected]);
+      drawBarChart.setupBarChart(airportsInZone[airportSelected]);
     }
   }
+  
+  // Niharika Shanbhag - created all conditional statements to switch between screens 6pm (02/04/24)
 
   if (screen5)
   {
+    int buttonResult = drawPieChart.mousePressed();
     background(255);
     drawPieChart.draw();
+    if(buttonResult == 0) {
+    }
+  }
+  
+  // Niharika Shanbhag - created all conditional statements to switch between screens 8pm (09/04/24)
+  
+  if(screen6) {
+    int buttonResult = drawBarChart.mousePressed();
+    background(255);
+    drawBarChart.drawBarChart(100, dataForBarChart);
+    println(dataForBarChart);
+    println(nationalData);
+    drawBarChart.drawBarChart(975, nationalData);
+    if(buttonResult == 0) {
+    }
   }
 }
 
@@ -465,7 +484,6 @@ void draw_query_table(int [] rowNums)
           nextPage = false;
         }
         queryLines[i].mousePressed(mouseY);
-        firstPage = false;
         queryLines[i].draw();
       }
     }

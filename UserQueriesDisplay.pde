@@ -19,6 +19,13 @@ class UserQueriesDisplay //
   int hght;
   PImage forwardArrow, backwardArrow;
   
+  // Niharika Shanbhag - created the "Go Back" button 6pm (02/04/24)
+  
+  int buttonWidth = 100;
+  int buttonHeight = 30;
+  int margin = 10;
+  Button goBackButton;
+  
   // changed y value to constant + removed from constructor, x!=constant as it gets mutated during runtime - Habiba (3pm, 25/03)
   boolean hovering; // added scrolling feature - 2pm (28/03)
   
@@ -31,10 +38,12 @@ class UserQueriesDisplay //
     backBoxX = 1265; 
     forwardArrow = loadImage("forward arrow.jpg");
     backwardArrow = loadImage("backward arrow.png");
+    goBackButton = new Button("Go Back", margin, height - buttonHeight - margin, buttonWidth, buttonHeight);
   }
   
   void draw(){
 // next page button - Habiba+Siddhi (4pm, 01/04)
+    goBackButton.display();
     Set<String> keys = DataPoints[rowNum].flightDict.keySet();
     fill(255);
     rect(nextBoxX, boxY, wdth, hght);
@@ -90,9 +99,23 @@ class UserQueriesDisplay //
  // highlighting feature - habiba (2pm, 28/03)
   void mousePressed(float mY){
     if (mousePressed && mY > SEPARATING_LINE_Y_COORD+(DOWN_GAP*(queryResultNum))+2 && mY < SEPARATING_LINE_Y_COORD+(DOWN_GAP*(queryResultNum))+textDescent()+DOWN_GAP-1 
-      && queryResultNum<35 && queryResultNum!=18 && queryResultNum!=19){ // fixed bug that triggers highlight when search button is pressed - Habiba
+      && queryResultNum<35){
       hovering = true;
     }
     else hovering = false;
   }
+  
+  // Niharika Shanbhag - created function to make the button functional 6pm (02/04/24)
+  
+  int mousePressed() {
+    if(goBackButton.isHovering(mouseX, mouseY)) {
+      if(mousePressed) {
+        screen2 = false;
+        screen1 = true;
+      }
+      return 0;
+    }
+    return -1;
+  }
+  
 }

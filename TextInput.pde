@@ -1,3 +1,5 @@
+// Niharika Shanbhag - created class to set labels for all text boxes and their positions 3pm (10/03/24)
+
 class TextInput {
   int x, y;
   String label;
@@ -45,13 +47,4 @@ class TextInput {
       return false;
     }
   }
-  
-  //void click(int mx, int my) {
-  //  if(mx > x && mx < x + 200 && my > y && my < y + 20) {
-  //    active = true;
-  //  }
-  //  else {
-  //    active = false;
-  //  }
-  //}
 }

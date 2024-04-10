@@ -88,6 +88,7 @@ int[] gatherDisplayableData() // Ben  function to gather the universal data to d
     double percentOnTimeOut = 100-percentLateOut-percentCancelledOut;
     println(airports.get(i) + " : " + flightsOut.get(i) + " : " + lateDepartures.get(i) + " : " + cancellationsOut.get(i) +
       " : " + percentOnTimeOut + "%, " + percentLateOut + "%, " + percentCancelledOut + "% --- " + flightsIn.get(i) + " : " + lateArrivals.get(i) + " : " + cancellationsIn.get(i));
+      
   }
 
 
@@ -100,8 +101,14 @@ int[] gatherDisplayableData() // Ben  function to gather the universal data to d
     nationalLates += lateDepartures.get(i);
     nationalCancels += cancellationsOut.get(i);
   }
+  
+  // Siddhi - getting percentages for the national data
+  int percentLateNationally = (nationalLates / nationalFlights) * 100;
+  int percentCancelledNationally = (nationalCancels / nationalFlights) * 100;
+  int percentOnTimeNationally = 100 - percentLateNationally - percentCancelledNationally;
   println("National Totals of Flights Out: " + nationalFlights + " : " + nationalLates + " : " + nationalCancels);
-  int[] nationalDataArray = { nationalFlights, nationalLates, nationalCancels };
+  int[] nationalDataArray = { percentCancelledNationally, percentLateNationally, percentOnTimeNationally};
+  // cancelled, late, ontime
   return nationalDataArray;
 }
 
@@ -409,4 +416,59 @@ float[] gatherData(String airport) // for pie chart
   float radians[] = {onTimeAngleOut, lateAngleOut, cancelledAngleOut, onTimeAngleIn, lateAngleIn, cancelledAngleIn, outAppearances, outLates, outCancels, inAppearances, inLates, inCancels};
 
   return radians;
+}
+
+int[] gatherBarChartData(String airport)
+{
+  int outAppearances = 0;
+  int outCancels = 0;
+  int outLates = 0;
+  int inAppearances = 0;
+  int inCancels = 0;
+  int inLates = 0;
+  String currentAirport = airport;
+  for (int j = 0; j < DataPoints.length; j++)
+  {
+    String comparingAirport = DataPoints[j].origin();
+    if (currentAirport.equals(comparingAirport))
+    {
+      outAppearances++;
+      if (DataPoints[j].cancelled()==1)
+      {
+        outCancels++;
+      }
+      if (DataPoints[j].crsDepTime() < DataPoints[j].depTime())
+      {
+        outLates++;
+      }
+    }
+    comparingAirport = DataPoints[j].dest();
+    if (currentAirport.equals(comparingAirport))
+    {
+      inAppearances++;
+      if (DataPoints[j].cancelled()==1)
+      {
+        inCancels++;
+      }
+      if (DataPoints[j].crsDepTime() < DataPoints[j].depTime())
+      {
+        inLates++;
+      }
+    }
+  }
+  
+  int totalAppearances = outAppearances + inAppearances;
+  int averageLateForAirport = (outLates + inLates) / 2;
+  int averageCancelsForAirport = (outCancels + inCancels) / 2;
+  int percentageLate = (averageLateForAirport / totalAppearances) * 100;
+  int percentageCancelled = (averageCancelsForAirport / totalAppearances) * 100;
+  int percentageOnTime = 100 - percentageLate - percentageCancelled;
+  
+  int[] dataForBarChart = new int[3];
+  // cancelled, late, ontime
+  dataForBarChart[0] = percentageCancelled;
+  dataForBarChart[1] = percentageLate;
+  dataForBarChart[2] = percentageOnTime;
+  
+  return dataForBarChart;
 }
