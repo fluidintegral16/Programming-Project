@@ -18,6 +18,11 @@ class UserQueriesDisplay //
   int wdth;
   int hght;
   PImage forwardArrow, backwardArrow;
+  int buttonWidth = 100;
+  int buttonHeight = 30;
+  int margin = 10;
+  Button goBackButton;
+  
   
   // changed y value to constant + removed from constructor, x!=constant as it gets mutated during runtime - Habiba (3pm, 25/03)
   boolean hovering; // added scrolling feature - 2pm (28/03)
@@ -31,10 +36,12 @@ class UserQueriesDisplay //
     backBoxX = 1265; 
     forwardArrow = loadImage("forward arrow.jpg");
     backwardArrow = loadImage("backward arrow.png");
+    goBackButton = new Button("Go Back", margin, height - buttonHeight - margin, buttonWidth, buttonHeight);
   }
   
   void draw(){
 // next page button - Habiba+Siddhi (4pm, 01/04)
+    goBackButton.display();
     Set<String> keys = DataPoints[rowNum].flightDict.keySet();
     fill(255);
     rect(nextBoxX, boxY, wdth, hght);
@@ -95,4 +102,22 @@ class UserQueriesDisplay //
     }
     else hovering = false;
   }
+  
+  int mousePressed() {
+    if(goBackButton.isHovering(mouseX, mouseY) && mousePressed) {
+      if(screen2) {
+        screen2 = false;
+        screen1 = true;
+      }
+      return 0;
+    }
+    return -1;
+  }
+  
+  //void mouseClicked() {
+  //  if(mousePressed && goBackButton.isHovering(mouseX, mouseY)) {
+  //    screen2 = false;
+  //    screen1 = true;
+  //  }
+  //}
 }

@@ -5,6 +5,10 @@
 class stateAirports{
   int x;
   int y;
+  int buttonWidth = 100;
+  int buttonHeight = 30;
+  int margin = 10;
+  Button goBackButton;
 
 
   PImage myImage;
@@ -30,7 +34,8 @@ class stateAirports{
     
     airportsToDisplay = sampleAirports;
     totalAirports = airportsToDisplay.length; 
-        
+    
+    goBackButton = new Button("Go Back", margin, height - buttonHeight - margin, buttonWidth, buttonHeight);
 
   }
   
@@ -62,6 +67,7 @@ class stateAirports{
         text( airportsToDisplay[counter], boxX + shiftX + rectWidth / 2, boxY + shiftY + rectHeight / 2);
 
     }
+    goBackButton.display();
     
   }
   
@@ -71,21 +77,31 @@ class stateAirports{
   
   
   int mousePressed(){
-    for (int counter = 0; counter < totalAirports; counter++) {
-        int rowIndex = counter / maxRectPerRow; // Calculate the row index
-        int colIndex = counter % maxRectPerRow; // Calculate the column index
-        int shiftX = colIndex * (rectWidth + rectSpacing);
-        int shiftY = rowIndex * (rectHeight + rectSpacing);
-    
-        if (isMouseOverRectangle(boxX + shiftX, boxY + shiftY, rectWidth, rectHeight)){
-          if (mousePressed){
-            println(counter);
-            return counter;
+    if(goBackButton.isHovering(mouseX, mouseY)) {
+      if(mousePressed) {
+        screen3 = true;
+        screen4 = false;
+        //screen2 = false;
+        //screen1 = false;
+        //screen5 = false;
+      }
+    }
+    else {
+      for (int counter = 0; counter < totalAirports; counter++) {
+          int rowIndex = counter / maxRectPerRow; // Calculate the row index
+          int colIndex = counter % maxRectPerRow; // Calculate the column index
+          int shiftX = colIndex * (rectWidth + rectSpacing);
+          int shiftY = rowIndex * (rectHeight + rectSpacing);
+      
+          if (isMouseOverRectangle(boxX + shiftX, boxY + shiftY, rectWidth, rectHeight)){
+            if (mousePressed){
+              println(counter);
+              return counter;
+            }
           }
-        }
-    
+      
+      }
     }
     return -1;
   }
-  
 }

@@ -16,6 +16,11 @@ class PieChart
   String airportCode = "";
   float[] pieChartData;
   int[] nationalDataArray;
+  int buttonWidth = 100;
+  int buttonHeight = 30;
+  int margin = 10;
+  Button goBackButton;
+  
   void setup(String airport, int[] nationalData)
   {
     airportCode = airport;
@@ -27,6 +32,7 @@ class PieChart
     onTimeAngleIn = pieChartData[3];
     delayedAngleIn = pieChartData[4];
     cancelledAngleIn = pieChartData[5];
+    goBackButton = new Button("Go Back", margin, height - buttonHeight - margin, buttonWidth, buttonHeight);
   }
 
 
@@ -69,5 +75,17 @@ class PieChart
     text(airportCode + " accounts for:\n" + (pieChartData[6]/float(nationalDataArray[0])*100) + "% of the national flights.\n" + (pieChartData[7]/float(nationalDataArray[1])*100) + "% of the national delays.\n" + (pieChartData[8]/float(nationalDataArray[2])*100) + "% of the national cancellations.\n", 700, 600);
     textSize(70);
     text(airportCode, 700, 50);
+    goBackButton.display();
+  }
+  
+  int mousePressed() {
+    if(goBackButton.isHovering(mouseX, mouseY) && mousePressed) {
+      if (screen5) {
+        screen5 = false;
+        screen4 = true;
+      }
+      return 0;
+    }
+    return -1;
   }
 }
