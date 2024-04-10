@@ -10,7 +10,7 @@ ArrayList<Integer> cancellationsOut;
 ArrayList<Integer> cancellationsIn;
 ArrayList<Integer> lateDepartures;
 ArrayList<Integer> lateArrivals;
-int[] nationalData;
+float[] nationalData;
 int[] dataForBarChart;
 
 UserQueriesDisplay queryLines[];
@@ -128,7 +128,6 @@ boolean isEmpty;
 
 PieChart drawPieChart;
 BarChart drawBarChart;
-
 
 void setup() {
   size (1400, 800);
@@ -406,9 +405,9 @@ void draw()
     {
       screen4 = false;
       screen5 = true;
-      drawPieChart.setup(airportsInZone[airportSelected], nationalData);
-      dataForBarChart = gatherBarChartData(airportsInZone[airportSelected]);
-      drawBarChart.setupBarChart(airportsInZone[airportSelected]);
+      drawPieChart.setup(airportsInZone[airportSelected]);
+      
+      drawBarChart.setup(airportsInZone[airportSelected], nationalData);
     }
   }
   
@@ -428,10 +427,9 @@ void draw()
   if(screen6) {
     int buttonResult = drawBarChart.mousePressed();
     background(255);
-    drawBarChart.drawBarChart(100, dataForBarChart);
     println(dataForBarChart);
     println(nationalData);
-    drawBarChart.drawBarChart(975, nationalData);
+    drawBarChart.draw();
     if(buttonResult == 0) {
     }
   }

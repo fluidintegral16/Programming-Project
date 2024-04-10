@@ -1,5 +1,5 @@
 
-int[] gatherDisplayableData() // Ben  function to gather the universal data to display and compare
+float[] gatherDisplayableData() // Ben  function to gather the universal data to display and compare
 {
   // -Ben   Creates a list of all the airports by area code
   for (int i = 0; i < DataPoints.length; i++)
@@ -103,11 +103,11 @@ int[] gatherDisplayableData() // Ben  function to gather the universal data to d
   }
   
   // Siddhi - getting percentages for the national data
-  int percentLateNationally = (nationalLates / nationalFlights) * 100;
-  int percentCancelledNationally = (nationalCancels / nationalFlights) * 100;
-  int percentOnTimeNationally = 100 - percentLateNationally - percentCancelledNationally;
-  println("National Totals of Flights Out: " + nationalFlights + " : " + nationalLates + " : " + nationalCancels);
-  int[] nationalDataArray = { percentCancelledNationally, percentLateNationally, percentOnTimeNationally};
+  float percentLateNationally = (float(nationalLates) / float(nationalFlights)) * 100;
+  float percentCancelledNationally = (float(nationalCancels) / float(nationalFlights)) * 100;
+  float percentOnTimeNationally = 100 - percentLateNationally - percentCancelledNationally;
+  println("National Totals of Flights Out: " + percentOnTimeNationally + " : " + percentLateNationally + " : " + percentCancelledNationally);
+  float[] nationalDataArray = { percentCancelledNationally, percentLateNationally, percentOnTimeNationally};
   // cancelled, late, ontime
   return nationalDataArray;
 }
@@ -418,7 +418,7 @@ float[] gatherData(String airport) // for pie chart
   return radians;
 }
 
-int[] gatherBarChartData(String airport)
+float[] gatherBarChartData(String airport)
 {
   int outAppearances = 0;
   int outCancels = 0;
@@ -457,18 +457,18 @@ int[] gatherBarChartData(String airport)
     }
   }
   
-  int totalAppearances = outAppearances + inAppearances;
-  int averageLateForAirport = (outLates + inLates) / 2;
-  int averageCancelsForAirport = (outCancels + inCancels) / 2;
-  int percentageLate = (averageLateForAirport / totalAppearances) * 100;
-  int percentageCancelled = (averageCancelsForAirport / totalAppearances) * 100;
-  int percentageOnTime = 100 - percentageLate - percentageCancelled;
   
-  int[] dataForBarChart = new int[3];
+  
+  float percentCancelledOut = float(outCancels)/float(outAppearances)*100;
+  float percentLateOut = float(outLates)/float(outAppearances)*100;
+  float percentOnTimeOut = 100-percentLateOut-percentCancelledOut;
+  
+  
+  float[] dataForBarChart = new float[3];
   // cancelled, late, ontime
-  dataForBarChart[0] = percentageCancelled;
-  dataForBarChart[1] = percentageLate;
-  dataForBarChart[2] = percentageOnTime;
+  dataForBarChart[0] = percentCancelledOut;
+  dataForBarChart[1] = percentLateOut;
+  dataForBarChart[2] = percentOnTimeOut;
   
   return dataForBarChart;
 }

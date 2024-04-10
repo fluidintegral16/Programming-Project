@@ -9,40 +9,64 @@ class BarChart{
   int buttonHeight = 30;
   int margin = 10;
   Button goBackButton;
+  float[] nationalDataArray;
+  float[] barChartData;
   
-  
- void setupBarChart(String airport)
+ void setup(String airport, float[] nationalData)
  {
+   barChartData = gatherBarChartData(airport);
   airportCode = airport;
   textSize(30);
   text(airportCode, 230, 700);
   text("National Average", 1100, 700);
   goBackButton = new Button("Go Back", margin, height - buttonHeight - margin, buttonWidth, buttonHeight);
+  nationalDataArray = nationalData;
  }
  
- void drawBarChart(int xpos, int[] data){
+ void draw()
+ {
   //textSize(30);
   //text("DFW", 230, 700); // replace with whatever way Ben gets name of airport in for Pie Chart
   //text("National Average", 1100, 700);
    goBackButton.display();
-   int numBars = data.length;
+   int numBars = barChartData.length;
    int barWidth = 250 / numBars;
   
   for(int i = 0; i < numBars; i++)
   {
-    float barHeight = map(data[i], 0, max(data), 0, 500);
-    float x = xpos + (i * barWidth);
+    float barHeight = map(barChartData[i], 0, max(barChartData), 0, 500);
+    float x = 100 + (i * barWidth);
     float y = 600 - barHeight;
     fill(0, 150, 180);
     rect(x, y, barWidth, barHeight);
     
     fill(0);
-    rect(xpos - 15, 60, 3, 540); // y-axis itself
-    rect(xpos - 15, y, -10, 3); // y-axis labels
+    rect(100 - 15, 60, 3, 540); // y-axis itself
+    rect(100 - 15, y, -10, 3); // y-axis labels
     
     textSize(15);
     textAlign(CENTER);
-    text(data[i], xpos - 30, y - 7); // y - axis label values
+    text(barChartData[i], 100 - 30, y - 7); // y - axis label values
+    text("        %  ", x + 30, 615);
+    text(barLabels[i], x + 40, 630);
+    
+  }
+  
+  for(int i = 0; i < numBars; i++)
+  {
+    float barHeight = map(nationalDataArray[i], 0, max(nationalDataArray), 0, 500);
+    float x = 975 + (i * barWidth);
+    float y = 600 - barHeight;
+    fill(0, 150, 180);
+    rect(x, y, barWidth, barHeight);
+    
+    fill(0);
+    rect(975 - 15, 60, 3, 540); // y-axis itself
+    rect(975 - 15, y, -10, 3); // y-axis labels
+    
+    textSize(15);
+    textAlign(CENTER);
+    text(nationalDataArray[i],975 - 30, y - 7); // y - axis label values
     text("        %  ", x + 30, 615);
     text(barLabels[i], x + 40, 630);
     

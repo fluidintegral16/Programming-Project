@@ -25,10 +25,9 @@ class PieChart
   Button goBackButton;
   Button barChartButton;
   
-  void setup(String airport, int[] nationalData)
+  void setup(String airport)
   {
     airportCode = airport;
-    nationalDataArray = nationalData;
     pieChartData = gatherData(airport);
     onTimeAngle = pieChartData[0];
     delayedAngle = pieChartData[1];
