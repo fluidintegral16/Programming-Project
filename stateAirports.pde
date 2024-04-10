@@ -91,7 +91,7 @@ class stateAirports{
         }
       }
     }
- // Arnav Sanghi, adding a method to return button pressed
+ // Arnav Sanghi, adding a method to return the number of the particular button pressed in order to send to next screen for stats and graphs
     else{
       for (int counter = 0; counter < totalAirports; counter++) {
         int rowIndex = counter / maxRectPerRow; // Calculate the row index
