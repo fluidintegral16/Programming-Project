@@ -4,3 +4,4 @@ Benjamin Howard
 Niharika Shanbhag
 Arnav Sanghi
 Siddhi Srivastav
+Krish Sood
